@@ -26,6 +26,7 @@ CREATE TABLE STORE (
   Has_Snack_Bar tinyint NOT NULL,
   State_Location varchar(50) NOT NULL,
   City_Name varchar(50) NOT NULL,
+  Time_Limit int NULL,
   PRIMARY KEY (Store_Number) 
 );
 
@@ -33,15 +34,12 @@ CREATE TABLE CITY (
   State_Location varchar(50) NOT NULL,
   City_Name varchar(50) NOT NULL,
   Population int NOT NULL,
-  Population_Size_Category ENUM('Small', 'Medium', 'Large', 'Extra Large') NOT NULL,
   PRIMARY KEY (State_Location, City_Name)
 );
 
 CREATE TABLE CHILDCARE (
-  Store_Number varchar(50) NOT NULL,
-  `Limit` int NOT NULL,
-  PRIMARY KEY (Store_Number),
-  FOREIGN KEY (Store_Number) REFERENCES STORE (Store_Number) ON DELETE CASCADE ON UPDATE CASCADE
+  Time_Limit int NOT NULL,
+  PRIMARY KEY (Time_Limit)
 );
 
 CREATE TABLE PRODUCT (
@@ -106,13 +104,13 @@ CREATE TABLE DISCOUNT (
 );
 
 CREATE TABLE ADVERTISING_CAMPAIGN (
-  `Description` varchar(50) NOT NULL,
+  `Description` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`Description`)
 );
 
 CREATE TABLE HOLD (
   `Date` date NOT NULL,
-  `Description` varchar(50) NOT NULL,
+  `Description` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`Date`, `Description`),
   FOREIGN KEY (`Date`) REFERENCES `DAY` (`Date`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`Description`) REFERENCES ADVERTISING_CAMPAIGN (`Description`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -120,8 +118,9 @@ CREATE TABLE HOLD (
 
 
 -- Add more CONSTRAINT
-
 ALTER TABLE STORE
 ADD CONSTRAINT fk_STORE_StateLocation_CityName_CITY_StateLocation_CityName FOREIGN KEY (State_Location, City_Name) REFERENCES CITY (State_Location, City_Name);  
+ALTER TABLE STORE
+ADD CONSTRAINT fk_STORE_TimeLimit_CHILDCARE_TimeLimit FOREIGN KEY (Time_Limit) REFERENCES CHILDCARE (Time_Limit);  
 
 
