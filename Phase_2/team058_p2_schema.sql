@@ -1,3 +1,22 @@
+-- CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+CREATE USER IF NOT EXISTS gatechUser058@localhost IDENTIFIED BY 'gatech058';
+
+DROP DATABASE IF EXISTS `cs6400_sp21_team058`; 
+SET default_storage_engine=InnoDB;
+SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE DATABASE IF NOT EXISTS cs6400_sp21_team058 
+    DEFAULT CHARACTER SET utf8mb4 
+    DEFAULT COLLATE utf8mb4_unicode_ci;
+USE cs6400_sp21_team058;
+
+GRANT SELECT, INSERT, UPDATE, DELETE, FILE ON *.* TO 'gatechUser058'@'localhost';
+GRANT ALL PRIVILEGES ON `gatechuser`.* TO 'gatechUser058'@'localhost';
+GRANT ALL PRIVILEGES ON `cs6400_sp21_team058`.* TO 'gatechUser058'@'localhost';
+FLUSH PRIVILEGES;
+
+
+-- CREATE TABLEs 
 
 CREATE TABLE STORE (
   Store_Number varchar(50) NOT NULL,
@@ -99,10 +118,10 @@ CREATE TABLE HOLD (
   FOREIGN KEY (`Description`) REFERENCES ADVERTISING_CAMPAIGN (`Description`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
+-- Add more CONSTRAINT
+
 ALTER TABLE STORE
-ADD CONSTRAINT fk_STORE_State_Location_CITY_State_Location FOREIGN KEY (State_Location) REFERENCES CITY (State_Location),
-ADD CONSTRAINT fk_STORE_City_Name_CITY_City_Name FOREIGN KEY (City_Name) REFERENCES CITY (City_Name);
-
-
+ADD CONSTRAINT fk_STORE_StateLocation_CityName_CITY_StateLocation_CityName FOREIGN KEY (State_Location, City_Name) REFERENCES CITY (State_Location, City_Name);  
 
 
