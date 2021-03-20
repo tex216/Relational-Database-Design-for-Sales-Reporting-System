@@ -17,7 +17,6 @@ FLUSH PRIVILEGES;
 
 
 -- CREATE TABLEs 
-
 CREATE TABLE STORE (
   Store_Number varchar(50) NOT NULL,
   Phone_Number char(10) NOT NULL,
