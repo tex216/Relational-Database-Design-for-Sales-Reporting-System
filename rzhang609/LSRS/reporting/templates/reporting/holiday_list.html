@@ -1,0 +1,20 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+    <h1>Holiday List</h1>
+
+    {% if holidayList %}
+    <ul>
+
+      {% for holiday in holidayList %}
+      <li>
+        {{ holiday.Name }} {{ holiday.Date }}
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no holiday</p>
+    {% endif %}
+
+{% endblock %}
