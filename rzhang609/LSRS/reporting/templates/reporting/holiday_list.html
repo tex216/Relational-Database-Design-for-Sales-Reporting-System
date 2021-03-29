@@ -1,20 +1,78 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-    <h1>Holiday List</h1>
 
-    {% if holidayList %}
-    <ul>
+<style>
+form {
+    text-align : left;
+}
+.btnSubmit {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+}
+</style>
 
-      {% for holiday in holidayList %}
-      <li>
-        {{ holiday.Name }} {{ holiday.Date }}
-      </li>
-      {% endfor %}
+<div class="container-fluid">
 
-    </ul>
-    {% else %}
-      <p>There are no holiday</p>
-    {% endif %}
+     <div class="row">
+        <h2 class="page-title">
+            <i class="bi bi-camera"></i>
+            <strong>Holiday Maintenance</strong>
+        </h2>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-lg">
+        {% if holidayList %}
+        <table>
+           <tr>
+            <th>Holiday Name</th>
+            <th>Holiday Date</th>
+          </tr>
+            {% for holiday in holidayList %}
+            <tr>
+                <td>{{ holiday.Name }}</td>
+                <td>{{ holiday.Date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+            </ul>
+        {% else %}
+        <p>There are no holiday</p>
+        {% endif %}
+                    </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="row" id="divAddHoliday">
+        <form action="/holiday/" method="post">
+            <div class="row">
+                <div class="col-sm-5">
+                    <label for="holiday_name">Holiday Name: </label>
+                </div>
+                <div class="col-sm-6">
+                    <input id="holiday_name" type="text" name="holiday_name" value="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <label for="holiday_name">Holiday Date: </label>
+                </div>
+                <div class="col-sm-6">
+                    <input id="holiday_date" type="text" name="holiday_date" value="">
+                </div>
+            </div>
+            <div class="row">
+                <input class="btnSubmit" type="submit" value="Submit" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
 
 {% endblock %}
