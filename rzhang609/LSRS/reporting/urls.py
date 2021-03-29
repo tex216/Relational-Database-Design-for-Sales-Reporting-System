@@ -9,3 +9,7 @@ urlpatterns = [
 urlpatterns += [
     path('holiday/', holiday.HolidayList.as_view(), name='holiday')
 ]
+
+urlpatterns += [
+    path('holiday/add_holiday/', holiday.add_new_holiday, name='add_holiday')
+]

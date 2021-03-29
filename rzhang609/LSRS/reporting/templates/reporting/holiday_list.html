@@ -22,8 +22,6 @@ form {
         </h2>
     </div>
 
-
-
     <div class="row">
         <div class="col-lg">
         {% if holidayList %}
@@ -43,34 +41,14 @@ form {
         {% else %}
         <p>There are no holiday</p>
         {% endif %}
-                    </div>
+        </div>
     </div>
     <br/>
-    <br/>
-    <br/>
-    <div class="row" id="divAddHoliday">
-        <form action="/holiday/" method="post">
-            <div class="row">
-                <div class="col-sm-5">
-                    <label for="holiday_name">Holiday Name: </label>
-                </div>
-                <div class="col-sm-6">
-                    <input id="holiday_name" type="text" name="holiday_name" value="">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-5">
-                    <label for="holiday_name">Holiday Date: </label>
-                </div>
-                <div class="col-sm-6">
-                    <input id="holiday_date" type="text" name="holiday_date" value="">
-                </div>
-            </div>
-            <div class="row">
-                <input class="btnSubmit" type="submit" value="Submit" />
-            </div>
-        </form>
-    </div>
+    <div class="row">
+         <button id="btnAddHoliday" onclick="location.href='/reporting/holiday/add_holiday/'" type="button">
+         Add Holiday
+         </button>
+     </div>
 </div>
 
 

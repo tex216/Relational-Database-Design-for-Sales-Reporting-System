@@ -1,0 +1,47 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<style>
+form {
+    text-align : left;
+}
+</style>
+
+<div class="container-fluid">
+     <div class="row">
+        <h2 class="page-title">
+            <i class="bi bi-camera"></i>
+            <strong>Holiday Maintenance - Add Holiday</strong>
+        </h2>
+    </div>
+
+    <div class="row" id="divAddHoliday">
+        <form action="/reporting/holiday/add_holiday/" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-5">
+                    <label for="holiday_name">Holiday Name: </label>
+                </div>
+                <div class="col-sm-6">
+                    <input id="holiday_name" type="text" name="holiday_name" value="" required >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <label for="holiday_name">Holiday Date: </label>
+                </div>
+                <div class="col-sm-6">
+                    <input id="holiday_date" type="text" name="holiday_date" value="" required >
+                </div>
+            </div>
+            <div class="row">
+                <input class="btnSubmit" type="submit" value="Submit" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}
