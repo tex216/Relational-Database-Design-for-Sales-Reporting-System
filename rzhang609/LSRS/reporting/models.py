@@ -2,7 +2,7 @@ from django.db import models
 
 
 class STORE(models.Model):
-    Store_Number = models.CharField(max_length=50)
+    Store_Number = models.CharField(max_length=50, primary_key=True)
     Phone_Number = models.CharField(max_length=10)
     Street_Address = models.CharField(max_length=200)
     Has_Restaurant = models.BooleanField(default=False)
@@ -88,7 +88,7 @@ class ASSIGNED(models.Model):
 
 class HOLIDAY(models.Model):
     Date = models.ForeignKey(DAY, on_delete= models.CASCADE, db_column='Date')
-    Name = models.CharField(max_length=50, primary_key=True)
+    Name = models.CharField(max_length=50, db_column='Name', primary_key=True)
 
     class Meta:
         db_table = 'holiday'
