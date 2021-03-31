@@ -1,19 +1,20 @@
-from django.urls import reverse
 from django.views import generic
 from django import forms
-from reporting.models import HOLIDAY
-from reporting.forms import AddHolidayForm
 from django.shortcuts import render
-from django.db import connection, transaction
+from django.db import connection
+from reporting.repository.sqlheper import SqlHelper
+from reporting.forms import AddHolidayForm
 
 
 class HolidayList(generic.ListView):
-    context_object_name = 'holidayList'
     template_name = "reporting/holiday_list.html"
+    context_object_name = 'holidayList'
 
-    # need add auto increased id as primary key
     def get_queryset(self):
-        return HOLIDAY.objects.raw("SELECT Name, Date FROM Holiday")
+        obj = SqlHelper()
+        holiday_list = obj.get_holiday_list()
+        obj.close()
+        return holiday_list
 
 
 def add_new_holiday(request):
@@ -27,6 +28,7 @@ def add_new_holiday(request):
             holiday_date = request.POST.get('holiday_date')
             holiday_name= request.POST.get('holiday_name')
 
+            obj = SqlHelper()
             cursor = connection.cursor()
             cursor.execute("INSERT INTO `DAY` (`Date`) SELECT %s FROM `DAY` "
                            "WHERE NOT EXISTS (SELECT 1 FROM `DAY` WHERE `Date` = %s) LIMIT 1;",
