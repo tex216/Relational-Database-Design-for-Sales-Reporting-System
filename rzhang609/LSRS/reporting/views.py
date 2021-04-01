@@ -1,12 +1,10 @@
 from django.shortcuts import render
-from .models import STORE, CHILDCARE, CITY, PRODUCT, SELL,DAY, SALE
-from .models import CATEGORY, ASSIGNED, HOLIDAY, DISCOUNT, ADVERTISIN_GCAMPAIGN, HOLD
 
 
 def index(request):
 
-    num_store = STORE.objects.all().count()
-    num_products = PRODUCT.objects.all().count()
+    num_store = 0
+    num_products = 0
 
     # Render the HTML template index.html with the data in the context variable
     return render(

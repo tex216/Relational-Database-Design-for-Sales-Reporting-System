@@ -12,4 +12,3 @@ class AddHolidayForm(forms.Form):
         holiday_date = self.cleaned_data['holiday_date']
         return holiday_date
 
-
