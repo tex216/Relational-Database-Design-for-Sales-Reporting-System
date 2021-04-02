@@ -6,8 +6,9 @@ class AddHolidayForm(forms.Form):
     holiday_date = forms.DateField(label='holiday_date')
 
     def clean_add_holiday_date(self):
+        holiday_name = self.cleaned_data["holiday_name"]
         holiday_date = self.cleaned_data['holiday_date']
-        return holiday_date
+        return holiday_name, holiday_date
 
 
 class UpdateCityPopulationForm(forms.Form):

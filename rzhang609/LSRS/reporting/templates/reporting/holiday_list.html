@@ -13,44 +13,62 @@ form {
 }
 </style>
 
-<div class="container-fluid">
-
-     <div class="row">
-        <h2 class="page-title">
-            <i class="bi bi-camera"></i>
-            <strong>Holiday Maintenance</strong>
-        </h2>
-    </div>
-
+<main class="container" role="main">
     <div class="row">
-        <div class="col-lg">
-        {% if holidayList %}
-        <table>
-           <tr>
-            <th>Holiday Name</th>
-            <th>Holiday Date</th>
-          </tr>
-            {% for holiday in holidayList %}
-            <tr>
-                <td>{{ holiday.Name }}</td>
-                <td>{{ holiday.Date }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-            </ul>
-        {% else %}
-        <p>There are no holiday</p>
-        {% endif %}
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Holiday List</li>
+                </ol>
+            </nav>
+
+            <br/>
+            <div class="align-items-center bg-purple rounded ">
+                <h3 class="col-md-8">
+                    <i class="bi bi-camera"></i>
+                    <p2>Holiday Maintenance - Holiday List</p2>
+                </h3>
+            </div>
+
+            <br/>
+            <div class="align-items-right bg-purple rounded" style="margin: 15px">
+                <button class="btn btn-primary active" id="btnAddHoliday" onclick="location.href='/reporting/holiday/add_holiday/'" type="button">
+                    Add Holiday
+                </button>
+            </div>
+
+            <br/>
+            <div class="align-items-center bg-purple rounded" id="divHolidayList">
+                <div class="col-md-10">
+                    {% if holidayList %}
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Holiday Date</th>
+                            <th scope="col">Holiday Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for holiday in holidayList %}
+                        <tr>
+                            <th scope="row"></th>
+                            <td>{{ holiday.Date }}</td>
+                            <td>{{ holiday.Name }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="alert alert-info" role="alert">
+                    <p>No Holiday!</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
-    <br/>
-    <div class="row">
-         <button id="btnAddHoliday" onclick="location.href='/reporting/holiday/add_holiday/'" type="button">
-         Add Holiday
-         </button>
-     </div>
-</div>
-
-
+</main>
 
 {% endblock %}

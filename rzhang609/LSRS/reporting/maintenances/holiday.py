@@ -1,6 +1,5 @@
 from django.views import generic
 from django.shortcuts import render
-from django.db import connection
 from reporting.forms import AddHolidayForm
 from reporting.repository.sqlhelprzhang import SqlHelper
 
@@ -17,36 +16,43 @@ class HolidayList(generic.ListView):
 
 
 def add_new_holiday(request):
-    from django.shortcuts import redirect
-
     if request.method == "POST":
         form = AddHolidayForm(request.POST)
 
         if form.is_valid():
-            # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
-            holiday_date = request.POST.get('holiday_date')
             holiday_name= request.POST.get('holiday_name')
+            holiday_date = request.POST.get('holiday_date')
 
-            obj = SqlHelper()
-            cursor = connection.cursor()
-            cursor.execute("INSERT INTO `DAY` (`Date`) SELECT %s FROM `DAY` "
-                           "WHERE NOT EXISTS (SELECT 1 FROM `DAY` WHERE `Date` = %s) LIMIT 1;",
-                           [holiday_date, holiday_date])
-            cursor.execute("INSERT INTO HOLIDAY (`Date`, `Name`) "
-                           "SELECT %s, %s "
-                           "FROM HOLIDAY WHERE NOT EXISTS ("
-                           "SELECT 1 FROM HOLIDAY WHERE `Date` = %s AND `Name` = %s)"
-                           "LIMIT 1;", [holiday_date, holiday_name, holiday_date, holiday_name])
-            cursor.close()
+            try:
+                obj = SqlHelper()
 
-            return redirect("/reporting/holiday/")
-            #url = reverse('holiday', kwargs={'holiday_add_status': "success"})
-            #return HttpResponseRedirect(url)
+                # check if holiday with the same day and same name existed or not
+                is_holiday_existed = obj.check_if_holiday_existed(holiday_name, holiday_date)
+                if is_holiday_existed > 0:
+                    obj.close()
+                    context = {
+                        'message': "Holiday existed with name: {0} and date: {1}".format(holiday_name, holiday_date),
+                    }
+                    return render(request, 'reporting/holiday_add_holiday.html', context)
+
+                obj.add_holiday(holiday_name, holiday_date)
+                obj.close()
+                context = {
+                    'message': "Holiday (name: {0} and date: {1}) is added".format(holiday_name, holiday_date),
+                    'form': AddHolidayForm(),
+                }
+            except Exception as e:
+                context = {
+                    'message': "Exception {0} based on holiday name {1} "
+                               "and holiday date {2}".format(str(e),holiday_name,  holiday_date)
+                }
+            return render(request, 'reporting/holiday_add_holiday.html', context)
     else:
         form = AddHolidayForm()
 
     context = {
         'form': form,
+        'message': ""
     }
 
     return render(request, 'reporting/holiday_add_holiday.html', context)

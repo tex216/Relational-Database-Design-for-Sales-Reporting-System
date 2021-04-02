@@ -2,50 +2,66 @@
 
 {% block content %}
 
-<style>
-form {
-    text-align : left;
-}
-</style>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script >
+<main class="container" role="main">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'holiday' %}">Holiday List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add Holiday</li>
+                </ol>
+            </nav>
 
+            <br/>
+            <div class="align-items-center bg-purple rounded">
+                <h3 class="col-md-8">
+                    <i class="bi bi-camera"></i>
+                    <p2>Holiday Maintenance - Add Holiday</p2>
+                </h3>
+            </div>
+
+            <br/>
+            <div class="container-md" style="margin:  20px">
+                <div class="row">
+                    <div class="align-items-center bg-purple rounded" id="divAddHoliday">
+                        <form action="/reporting/holiday/add_holiday/" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="holiday_name">Holiday Name: </label>
+                                <input class="form-control" id="holiday_name" type="text" name="holiday_name" placeholder="Enter Holiday Name" value="" required >
+                            </div>
+                            <div class="form-group">
+                                <label for="holiday_name">Holiday Date: </label>
+                                <input id="holiday_date" class="form-control" type="text" name="holiday_date" placeholder="Select Holiday Date" autocomplete="off" readonly required >
+                            </div>
+                            <br/>
+                            <button type="submit" class="btn btn-primary" id="btnSubmit">Add Holiday</button>
+                        </form>
+                    </div>
+               </div>
+            </div>
+
+            {% if message %}
+            <br/>
+            <div class="align-items-center rounded alert alert-info" role="alert" id="divMessage" >
+                {{ message }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+<script>
+$( document ).ready(function() {
+    $( '#holiday_date' ).datepicker({
+            dateFormat: 'yy-mm-dd',
+    });
+});
 </script>
-
-<div class="container-fluid">
-     <div class="row">
-        <h2 class="page-title">
-            <i class="bi bi-camera"></i>
-            <strong>Holiday Maintenance - Add Holiday</strong>
-        </h2>
-    </div>
-
-    <div class="row" id="divAddHoliday">
-        <form action="/reporting/holiday/add_holiday/" method="post">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-sm-5">
-                    <label for="holiday_name">Holiday Name: </label>
-                </div>
-                <div class="col-sm-6">
-                    <input id="holiday_name" type="text" name="holiday_name" value="" required >
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-5">
-                    <label for="holiday_name">Holiday Date: </label>
-                </div>
-                <div class="col-sm-6">
-                    <input id="holiday_date" type="text" name="holiday_date" value="" required >
-                </div>
-            </div>
-            <div class="row">
-                <input class="btnSubmit" type="submit" value="Submit" />
-            </div>
-        </form>
-    </div>
-</div>
-
-
 
 {% endblock %}
