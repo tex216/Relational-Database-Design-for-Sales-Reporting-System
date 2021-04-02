@@ -13,3 +13,12 @@ VALUES('2021-01-01');
 
 INSERT INTO Holiday(DATE, Name)
 VALUES('2021-01-01', 'New Year');
+
+
+
+INSERT INTO childcare
+VALUES(60);
+
+INSERT INTO STORE
+VALUES
+('Store_Number_1', '1234567890', 'Street_Address_1', 0, 0, 'NY', 'New York', 60);

@@ -31,7 +31,7 @@ def add_new_holiday(request):
                 if is_holiday_existed > 0:
                     obj.close()
                     context = {
-                        'message': "Holiday existed with name: {0} and date: {1}".format(holiday_name, holiday_date),
+                        'message': "Holiday is existed with name: {0} and date: {1}".format(holiday_name, holiday_date),
                     }
                     return render(request, 'reporting/holiday_add_holiday.html', context)
 

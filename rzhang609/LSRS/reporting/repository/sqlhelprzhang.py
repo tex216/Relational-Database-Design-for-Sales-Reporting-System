@@ -9,6 +9,37 @@ class SqlHelper(object):
                                     passwd='GatechOmsCS2021',  db='cs6400_sp21_team058')
         self.cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
 
+    # dashboard the count of stores
+    def get_count_of_store(self):
+        self.cursor.execute("SELECT COUNT(Store_Number) AS Count FROM STORE")
+        count_of_store = self.cursor.fetchall()
+        return count_of_store
+
+    # dashboard the count of stores offering food
+    def get_count_stores_offering_food(self):
+        self.cursor.execute("SELECT COUNT(Store_Number) AS Count FROM STORE "
+                            "WHERE Has_Restaurant IS TRUE OR Has_Snack_Bar IS TRUE;")
+        count_stores_offering_food = self.cursor.fetchall()
+        return count_stores_offering_food
+
+    # dashboard the count of stores offering childcare
+    def get_count_stores_offering_childcare(self):
+        self.cursor.execute("SELECT COUNT(Store_Number) AS Count FROM STORE WHERE Time_Limit IS NOT NULL;")
+        count_stores_offering_childcare = self.cursor.fetchall()
+        return count_stores_offering_childcare
+
+    # dashboard the count of products
+    def get_count_products(self):
+        self.cursor.execute("SELECT COUNT(PID) AS Count FROM PRODUCT;")
+        count_products = self.cursor.fetchall()
+        return count_products
+
+    # dashboard the count of distinct advertising campaigns
+    def get_count_distinct_advertising_campaigns(self):
+        self.cursor.execute("SELECT COUNT(Description) AS Count FROM ADVERTISING_CAMPAIGN;")
+        count_distinct_advertising_campaigns = self.cursor.fetchall()
+        return count_distinct_advertising_campaigns
+
     # population maintenance: get the state list
     def get_state_list(self):
         self.cursor.execute("SELECT DISTINCT State_Location FROM CITY ORDER BY State_Location ASC")
