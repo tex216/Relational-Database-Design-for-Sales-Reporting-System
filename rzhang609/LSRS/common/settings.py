@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'common.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cs6400',
+        'NAME': 'cs6400_sp21_team058',
         'USER': 'root',
         'PASSWORD': 'GatechOmsCS2021',
         'HOST': '127.0.0.1',
