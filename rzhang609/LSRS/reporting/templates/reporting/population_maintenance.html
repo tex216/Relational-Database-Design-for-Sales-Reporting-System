@@ -39,6 +39,7 @@
                     <div class="col-xs-12 form-group">
                         <label class="col-xs-4"  for="city_population">Population:</label>
                         <input class="col-xs-8 form-control" type="text" id="city_population" name="city_population" onkeyup="value=value.replace(/[^\d]/g,'')" required="required" readonly>
+                       <input class="col-xs-8 form-control" type="hidden" id="hid_city_population" name="hid_city_population" style="display: none" value="">
                     </div>
                     <div class="col-xs-12 form-group">
                         <input class="btnSubmit btn btn-lg btn-secondary" id="btnSubmit" type="submit" value="Update Population" disabled/>
@@ -80,6 +81,7 @@
                 $('#city_name').attr("disabled", true);
                 $('#city_population').val('')
                 $("#city_population").attr("readonly", true);
+                $('#hid_city_population').val('')
                 $("#btnSubmit").attr("disabled", true);
                 $("#btnSubmit").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
                 return;
@@ -124,6 +126,7 @@
             if (city_name.val() === "-1" ) {
                 $('#city_population').val('');
                 $("#city_population").attr("readonly", true);
+                $('#hid_city_population').val('')
                 $("#btnSubmit").attr("disabled", true);
                 $("#btnSubmit").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
                 return;
@@ -140,6 +143,7 @@
                 success: function (response) {
                     $('#city_population').val(response[0].Population)
                     $("#city_population").attr("readonly", false);
+                    $('#hid_city_population').val(response[0].Population)
                  },
                  fail: function() {
                     $("#hidStatus").val("failed");
@@ -160,6 +164,14 @@
                 ShowAlertDiv();
                 return;
             }
+
+            if($('#city_population').val() == $('#hid_city_population').val())
+            {
+                $("#btnSubmit").attr("disabled", true);
+                $("#btnSubmit").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
+                return;
+            }
+
 
             $("#btnSubmit").attr("disabled", false);
             $("#btnSubmit").removeClass("btn-secondary").addClass("btn-primary active");
