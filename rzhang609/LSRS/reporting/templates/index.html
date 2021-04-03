@@ -2,37 +2,28 @@
 
 {% block content %}
 
+<style>
+.list-group-item:not(.active):hover {
+  background-color: #00ff73 ;
+}
+</style>
+
 <main class="container" role="main">
     <div class="row" >
         <div class="col-md-10">
             <div class="container-fluid text-center">
-                <h1><p2>Dashboard</p2></h1>
+                <h1>
+                <i class="bi bi-speedometer2"></i>
+                Dashboard
+                </h1>
             </div>
         </div>
     </div>
     <div class="row" style="margin: 10px">
         <div class="col-md-10">
-              <div class="row" style="margin:  20px">
-                <div class="col-md-4 offset-md-2 d-flex align-items-stretch">
-                    <div class="card text-white bg-success" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title text-right">{{ count_stores }}</h5>
-                            <p class="card-text">The count of stores</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 d-flex align-items-stretch" >
-                    <div class="card text-white bg-primary" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title text-right">{{ count_stores_offering_food }}</h5>
-                            <p class="card-text">Count of stores offering food</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
+            <div class="row" style="margin:  10px">
                 <div class="col-md-4 d-flex align-items-stretch">
-                    <div class="card text-white bg-warning" style="width: 18rem;">
+                    <div class="card text-white bg-primary" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title text-right">{{ count_stores_offering_childcare }}</h5>
                             <p class="card-text">Count of stores offering childcare</p>
@@ -40,7 +31,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 d-flex align-items-stretch" >
-                    <div class="card text-white bg-secondary" style="width: 18rem;">
+                    <div class="card bg-dark text-white" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title text-right">{{ count_products }}</h5>
                             <p class="card-text">Count of products</p>
@@ -48,10 +39,29 @@
                     </div>
                 </div>
                 <div class="col-md-4 d-flex align-items-stretch" >
-                    <div class="card text-white bg-info" style="width: 18rem;">
+                    <div class="card bg-danger text-white" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title text-right">{{ count_distinct_advertising_campaigns }}</h5>
                             <p class="card-text">Count of distinct advertising campaigns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row" style="margin:  10px">
+                <div class="col-md-4 offset-md-2 d-flex align-items-stretch">
+                    <div class="card bg-warning text-dark" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title text-right">{{ count_stores }}</h5>
+                            <p class="card-text">The count of stores</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-stretch" >
+                    <div class="card bg-success text-white" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title text-right">{{ count_stores_offering_food }}</h5>
+                            <p class="card-text">Count of stores offering food</p>
                         </div>
                     </div>
                 </div>
@@ -69,10 +79,11 @@
         <div class="col-md-10">
             <div class="row" style="margin: 10px">
                 <div class="list-group col-md-6">
-                    <span class="list-group-item list-group-item-action active"> Reporting </span>
-                    <a href="#" class="list-group-item list-group-item-action"> Category </a>
+                    <span class="list-group-item list-group-item-action list-group-item-primary text-center active"> Reporting </span>
+                    <a href="#" class="list-group-item list-group-item-action">Category</a>
                     <a href="#" class="list-group-item list-group-item-action">Actual versus Predicted Revenue for Couches and Sofas</a>
                     <a href="#" class="list-group-item list-group-item-action">Store Revenue by Year by State</a>
+                    <a href="#" class="list-group-item list-group-item-action">Outdoor Furniture Revenue</a>
                     <a href="#" class="list-group-item list-group-item-action">State with Highest Volume</a>
                     <a href="#" class="list-group-item list-group-item-action">Revenue by Population</a>
                     <a href="#" class="list-group-item list-group-item-action">Childcare Sales Volume</a>
@@ -80,8 +91,8 @@
                     <a href="#" class="list-group-item list-group-item-action">Advertising Campaign Analysis</a>
                 </div>
                 <div class="list-group col-md-6">
-                    <span class="list-group-item list-group-item-action active"> Maintenance </span>
-                    <a href="{% url 'population' %}" class="list-group-item list-group-item-action">Population Maintenance </a>
+                    <span class="list-group-item list-group-item-action list-group-item-primary text-center active"> Maintenance </span>
+                    <a href="{% url 'population' %}" class="list-group-item list-group-item-action">Population Maintenance</a>
                     <a href="{% url 'holiday' %}" class="list-group-item list-group-item-action">Holiday Maintenance</a>
                 </div>
             </div>
