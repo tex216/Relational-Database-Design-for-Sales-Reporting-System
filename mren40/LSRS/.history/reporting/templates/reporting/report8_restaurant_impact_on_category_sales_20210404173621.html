@@ -1,0 +1,67 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<style>
+    form {
+        text-align: left;
+    }
+
+    .btnSubmit {
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+    }
+</style>
+
+<main class="container" role="main">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Restaurant Impact on Category Sales</li>
+                </ol>
+            </nav>
+
+            <br />
+            <div class="align-items-center bg-purple rounded ">
+                <h1 class="col-md-8">
+                    <i class="bi bi-instagram"></i>
+                    <p2>Restaurant Impact on Category Sales</p2>
+                </h1>
+            </div>
+
+            <br />
+            <div class="align-items-center bg-purple rounded" id="divReport8">
+                <div class="col-md-10">
+                    {% if report8 %}
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Category</th>
+                                <th scope="col">Store Type</th>
+                                <th scope="col">Quantity Sold</th>
+                        </thead>
+                        <tbody>
+                            {% for tuple in report8 %}
+                            <tr>
+                                <td>{{ tuple.Category }}</td>
+                                <td>{{ tuple.StoreType }}</td>
+                                <td>{{ tuple.QuantitySold }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <p>No Records!</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
