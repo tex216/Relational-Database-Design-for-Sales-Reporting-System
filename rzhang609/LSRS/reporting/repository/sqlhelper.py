@@ -92,7 +92,7 @@ class SqlHelper(object):
                             "LIMIT 1;", [holiday_date, holiday_name, holiday_date, holiday_name])
         self.conn.commit()
 
-    # get report 8 data set
+    # report 8 Restaurant Impact on Category Sales:  get data set
     def get_report8(self):
         self.cursor.execute(
             "SELECT COLS.Category, COLS.`Store Type` AS StoreType, IFNULL(ACT.`Quantity Sold`, 0) AS QuantitySold "
@@ -118,7 +118,7 @@ class SqlHelper(object):
         report8_res = self.cursor.fetchall()
         return report8_res
 
-    # get report 9 data set
+    # report 9 Advertising Campaign Analysis: get data set
     def get_report9(self):
         self.cursor.execute(
             "SELECT `Product ID` AS ProductID, `Product Name` AS ProductName, "
