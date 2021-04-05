@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from reporting.forms import UpdateCityPopulationForm
-from reporting.repository.sqlhelprzhang import SqlHelper
+from reporting.repository.sqlhelper import SqlHelper
 
 
 def city_population_load(request):

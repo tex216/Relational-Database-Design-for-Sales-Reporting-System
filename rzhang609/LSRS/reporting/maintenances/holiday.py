@@ -1,7 +1,7 @@
 from django.views import generic
 from django.shortcuts import render
 from reporting.forms import AddHolidayForm
-from reporting.repository.sqlhelprzhang import SqlHelper
+from reporting.repository.sqlhelper import SqlHelper
 
 
 class HolidayList(generic.ListView):
