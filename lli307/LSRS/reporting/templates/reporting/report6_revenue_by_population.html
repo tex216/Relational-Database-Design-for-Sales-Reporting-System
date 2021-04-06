@@ -1,0 +1,61 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<main class="container" role="main">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Revenue by Population</li>
+                </ol>
+            </nav>
+
+            <br />
+            <div class="align-items-center bg-purple rounded ">
+                <h1 class="col-md-20">
+                    <i class="bi bi-instagram"></i>
+                    <p2>Revenue by Population</p2>
+                </h1>
+            </div>
+
+            <br />
+            <div class="align-items-center bg-purple rounded" id="divReport6">
+                <div class="col-md-10">
+                    {% if report6 %}
+                    <table class="table table-bordered table-sm">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Years</th>
+                                <th scope="col">Small City</th>
+                                <th scope="col">Medium City</th>
+                                <th scope="col">Large City</th>
+                                <th scope="col">Extra Large City</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tuple in report6 %}
+                            <tr>
+                                <td>{{ tuple.Years }}</td>
+                                <td>{{ tuple.SmallCity }}</td>
+                                <td>{{ tuple.MediumCity }}</td>
+                                <td>{{ tuple.LargeCity }}</td>
+                                <td>{{ tuple.ExtraLargeCity }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <p>No Records!</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+
