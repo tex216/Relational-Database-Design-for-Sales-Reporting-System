@@ -1,0 +1,103 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<main class="container" role="main">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Store Revenue by Year by State</li>
+                </ol>
+            </nav>
+
+            <div class="align-items-center  bg-purple rounded ">
+                <h1 class="mb-4">
+                    <i class="bi bi-people"></i>
+                    <p2>Store Revenue by Year by State</p2>
+                </h1>
+            </div>
+
+            <div class="align-items-center bg-purple rounded" id="divReport3GetState">
+                <form action="/reporting/report3_store_revenue_by_year_by_state/" method="post">
+                    {% csrf_token %}
+                    <div class="col-xs-12 form-group">
+                        <label class="col-xs-4" for="city_state_location">State:</label>
+                        <select class="col-xs-8 form-control" name="city_state_location" id="city_state_location" data-placeholder="Select State"  required="required">
+                            <option value="-1">Select State</option>
+                            {% for state in state_list %}
+                            <option value="{{ state.State_Location }}">{{ state.State_Location }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br/>
+                    <div class="align-items-right bg-purple rounded" style="margin: 15px">
+                        <button class="btn btn-primary active" id="btnReport3"  type="submit" >
+                            Run Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script>
+
+    $( document ).ready(function() {
+        ShowAlertDiv();
+    });
+
+    $("#city_state_location").change(function() {
+            ClearAlertMessage();
+
+            var state_location = $("#city_state_location option:selected");
+            if (typeof state_location === "undefined" || state_location.val() === "" ) {
+                $("#hidStatus").val("failed");
+                $("#hidMessage").val("Please select appropriate state.");
+                ShowAlertDiv();
+                return;
+            }
+
+            if (state_location.val() === "-1" ) {
+                $('#city_name').html('');
+                $('#city_name').attr("disabled", true);
+                $('#city_population').val('')
+                $("#city_population").attr("readonly", true);
+                $('#hid_city_population').val('')
+                $("#btnSubmit").attr("disabled", true);
+                $("#btnSubmit").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
+                return;
+            }
+
+            $("#btnSubmit").attr("disabled", false);
+            $("#btnSubmit").removeClass("btn-secondary").addClass("btn-primary active");
+
+
+    function ShowAlertDiv() {
+        if ($("#hidStatus").val() == "success" && $("#hidMessage").val().length > 0 ) {
+        $("#divFailureMessage").css('display','none');
+        $("#divSuccessMessage").html($("#hidMessage").val());
+        $("#divSuccessMessage").css('display','block');
+        } else if ($("#hidStatus").val() == "failed" && $("#hidMessage").val().length > 0 ) {
+        $("#divSuccessMessage").css('display','none');
+        $("#divFailureMessage").html($("#hidMessage").val());
+        $("#divFailureMessage").css('display','block');
+        }
+    }
+
+    function ClearAlertMessage(){
+        $("#hidMessage").val('');
+        $("#hidStatus").val('');
+        $("#divSuccessMessage").html('');
+        $("#divSuccessMessage").css('display','none');
+        $("#divFailureMessage").html('');
+        $("#divFailureMessage").css('display','none');
+    }
+
+</script>
+
+
+{% endblock %}
