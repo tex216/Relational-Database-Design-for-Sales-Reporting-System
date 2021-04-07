@@ -1,7 +1,8 @@
 from django.views import generic
 from reporting.repository.sqlhelperli import SqlHelper
 
-class GetReport(generic.ListView):
+
+class GetReport6(generic.ListView):
     template_name = "reporting/report6_revenue_by_population.html"
     context_object_name = "report6"
 

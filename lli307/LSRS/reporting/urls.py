@@ -3,6 +3,7 @@ from reporting import views
 from reporting.maintenances import holiday
 from reporting.maintenances import population
 from reporting.reports import report6
+from reporting.reports import report3
 
 urlpatterns = [
     path('', views.index, name='index')
@@ -23,5 +24,14 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('report6_revenue_by_population/', report6.GetReport.as_view(), name='report6_revenue_by_population')
+    path('report3_store_revenue_by_year_by_state/get_state/', report3.state_list_load, name='report3_state_list_load')
+]
+
+urlpatterns += [
+    path('report3_store_revenue_by_year_by_state/result/', report3.GetReport3.as_view(), name='report3_store_revenue')
+]
+
+
+urlpatterns += [
+    path('report6_revenue_by_population/', report6.GetReport6.as_view(), name='report6_revenue_by_population')
 ]
