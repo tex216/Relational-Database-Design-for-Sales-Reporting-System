@@ -24,11 +24,7 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('report3_store_revenue_by_year_by_state/get_state/', report3.state_list_load, name='report3_state_list_load')
-]
-
-urlpatterns += [
-    path('report3_store_revenue_by_year_by_state/result/', report3.GetReport3.as_view(), name='report3_store_revenue')
+    path('report3_store_revenue_by_year_by_state/', report3.store_revenue, name='report3_store_revenue_by_year_by_state')
 ]
 
 

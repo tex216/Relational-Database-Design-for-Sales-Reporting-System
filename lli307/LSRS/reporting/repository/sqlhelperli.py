@@ -16,15 +16,14 @@ class SqlHelper(object):
 
     # Report 3_Store Revenue by Year by State
     def report3_store_revenue_by_year_by_state(self, state_location):
-        self.cursor.execute(
-            "SELECT STORE.Store_Number, Street_Address, City_Name, YEAR(Date), SUM(IFNULL("
-            "Total_Amount, 0)) AS Revenue "
-            "FROM STORE"
-            "LEFT JOIN SALE ON STORE.Store_Number = SALE.Store_Number"
-            "WHERE State_Location = %s "
-            "GROUP BY STORE.Store_Number, YEAR(Date)"
-            "ORDER BY YEAR(Date) ASC, Revenue DESC;",
-            [state_location])
+
+        self.cursor.execute("SELECT STORE.Store_Number AS Store_ID, Street_Address, City_Name, YEAR(Date) AS Year"
+                            ", SUM(IFNULL(Total_Amount, 0)) AS Revenue "
+                            "FROM STORE "
+                            "LEFT JOIN SALE ON STORE.Store_Number = SALE.Store_Number "
+                            "WHERE STORE.State_Location = %s"
+                            "GROUP BY STORE.Store_Number, YEAR(Date)"
+                            "ORDER BY YEAR(Date) ASC, Revenue DESC;", [state_location])
 
         report3_res = self.cursor.fetchall()
         return report3_res

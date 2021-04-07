@@ -37,10 +37,10 @@
                         <tbody>
                             {% for tuple in report3 %}
                             <tr>
-                                <td>{{ tuple.STORE.Store_Number }}</td>
+                                <td>{{ tuple.Store_ID }}</td>
                                 <td>{{ tuple.Street_Address }}</td>
                                 <td>{{ tuple.City_Name }}</td>
-                                <td>{{ tuple.YEAR(Date) }}</td>
+                                <td>{{ tuple.Year }}</td>
                                 <td>{{ tuple.Revenue }}</td>
                             </tr>
                             {% endfor %}
