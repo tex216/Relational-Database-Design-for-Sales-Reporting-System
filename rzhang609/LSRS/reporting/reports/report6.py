@@ -1,5 +1,5 @@
 from django.views import generic
-from reporting.repository.sqlhelperli import SqlHelper
+from reporting.repository.sqlhelper import SqlHelper
 
 
 class GetReport6(generic.ListView):

@@ -21,3 +21,11 @@ class UpdateCityPopulationForm(forms.Form):
         city_name = self.cleaned_data['city_name']
         city_population = self.cleaned_data['city_population']
         return city_state_location, city_name, city_population
+
+
+class Report3SelectStateForm(forms.Form):
+    city_state_location = forms.CharField(label='city_state_location', max_length=50)
+
+    def clean_select_state(self):
+        city_state_location = self.cleaned_data['city_state_location']
+        return city_state_location

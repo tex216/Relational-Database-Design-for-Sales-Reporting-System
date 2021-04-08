@@ -1,7 +1,6 @@
-from django.views import generic
 from django.shortcuts import render
 from reporting.forms import Report3SelectStateForm
-from reporting.repository.sqlhelperli import SqlHelper
+from reporting.repository.sqlhelper import SqlHelper
 
 
 def store_revenue(request):
@@ -20,12 +19,12 @@ def store_revenue(request):
         context = {
             'state_list': state_list,
             'message': message,
-            'status': status
+            'status': status,
+            'report3': []
         }
 
         return render(request, 'reporting/report3_store_revenue_get_state.html', context)
     elif request.method == "POST":
-
         form = Report3SelectStateForm(request.POST)
 
         if form.is_valid():
@@ -34,7 +33,6 @@ def store_revenue(request):
             try:
                 obj = SqlHelper()
                 report3 = obj.report3_store_revenue_by_year_by_state(state_location)
-               # state_list = obj.get_state_list()
                 obj.close()
                 print(report3)
                 context = {
@@ -69,5 +67,4 @@ def store_revenue(request):
                 'status': status
             }
 
-        return render(request, 'reporting/report3_store_revenue_get_state.html', context)
-
+            return render(request, 'reporting/report3_store_revenue_get_state.html', context)
