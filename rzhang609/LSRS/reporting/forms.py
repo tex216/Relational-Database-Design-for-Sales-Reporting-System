@@ -29,3 +29,13 @@ class Report3SelectStateForm(forms.Form):
     def clean_select_state(self):
         city_state_location = self.cleaned_data['city_state_location']
         return city_state_location
+
+
+class Report5SelectYearAndMonthForm(forms.Form):
+    year_list = forms.CharField(label='year_list', max_length=50)
+    month_list = forms.CharField(label='month_list', max_length=50)
+
+    def clean_select_year_month(self):
+        year_list = self.cleaned_data['year_list']
+        month_list = self.cleaned_data['month_list']
+        return year_list, month_list

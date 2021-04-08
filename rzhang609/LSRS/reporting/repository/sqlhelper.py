@@ -166,6 +166,42 @@ class SqlHelper(object):
         report4_res = self.cursor.fetchall()
         return report4_res
 
+    # report 5 Get Year List
+    def get_year_list(self):
+        self.cursor.execute("SELECT DISTINCT YEAR(`Date`) AS `Year` FROM `Day` ORDER BY `Year` DESC;")
+        year_list = self.cursor.fetchall()
+        return year_list
+
+    # report 5 Get Month list
+    def get_month_list(self, selected_year):
+        self.cursor.execute("SELECT DISTINCT MONTH(`Date`) AS `Month` FROM `Day` WHERE YEAR(`Date`) = %s "
+                            "ORDER BY `Month` DESC;",
+                            [selected_year])
+        month_list = self.cursor.fetchall()
+        return month_list
+
+    # report 5 State with Highest Volume: get data set
+    def get_report5(self, selected_year, selected_month):
+        self.cursor.execute(
+            "SELECT C.Category_Name, T.State_Location, SUM(IFNULL(S.Quantity,0)) AS Tot_UnitSold FROM CATEGORY AS C "
+            "LEFT JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
+            "LEFT JOIN PRODUCT AS P ON A.PID = P.PID "
+            "LEFT JOIN SALE AS S ON P.PID = S.PID AND YEAR(S.`Date`) = %s AND MONTH(S.`Date`) = %s "
+            "LEFT JOIN STORE AS T ON S.Store_Number = T.Store_Number "
+            "GROUP BY C.Category_Name, T.State_Location "
+            "HAVING Tot_UnitSold >= ALL ( "
+            "SELECT SUM(IFNULL(S2.Quantity,0)) "
+            "FROM CATEGORY AS C2 "
+            "LEFT JOIN ASSIGNED AS A2 ON C2.Category_Name = A2.Category_Name "
+            "LEFT JOIN PRODUCT AS P2 ON A2.PID = P2.PID "
+            "LEFT JOIN SALE AS S2 ON P2.PID = S2.PID AND YEAR(S2.`Date`) = %s AND "
+            "MONTH(S2.`Date`) = %s "
+            "LEFT JOIN STORE AS T2 ON S2.Store_Number = T2.Store_Number WHERE C2.Category_Name = C.Category_Name "
+            "GROUP BY C2.Category_Name, T2.State_Location "
+            ") ORDER BY C.Category_Name ASC;", ([selected_year], [selected_month], [selected_year], [selected_month]))
+        report5_res = self.cursor.fetchall()
+        return report5_res
+
     # Report 6_Revenue by population
     def report6_revenue_by_population(self):
         self.cursor.execute(
@@ -180,6 +216,34 @@ class SqlHelper(object):
         )
         report6_res = self.cursor.fetchall()
         return report6_res
+
+    # report 7 Childcare Sales Volume:  get data set
+    def get_report7(self):
+        self.cursor.execute("SET @Sql = ''; ")
+        self.cursor.execute(
+            "SELECT @Sql:=CONCAT(@Sql, 'SUM(IF(Childcare_Category=\"',Childcare_Category,'\"',',Total_Amount,0)) AS \"', "
+            "Childcare_Category,'\",') "
+            "FROM ( "
+            "SELECT DISTINCT "
+            "IF(STORE.Time_Limit IS NOT NULL, CAST(STORE.Time_Limit AS CHAR(10)), 'No childcare') AS Childcare_Category "
+            "FROM STORE "
+            ") AS TL; "
+        )
+        self.cursor.execute(
+            "SET @Sql = CONCAT('SELECT Sale_Year_Month,',LEFT(@Sql, LENGTH(@Sql)-1),' FROM ( "
+            "SELECT DATE_FORMAT(SALE.`Date`, \"%Y %M\") AS Sale_Year_Month, SALE.Total_Amount AS Total_Amount, "
+            "IF( STORE.Time_Limit IS NOT NULL, CAST(STORE.Time_Limit AS CHAR(10)), \"No childcare\") AS Childcare_Category "
+            "FROM STORE INNER JOIN SALE ON STORE.Store_Number = SALE.Store_Number "
+            "WHERE SALE.`Date` >= DATE_ADD( LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 12 MONTH) ), INTERVAL 1 DAY)) AS REV "
+            "GROUP BY Sale_Year_Month ORDER BY Sale_Year_Month ASC'); "
+        )
+        self.cursor.execute(
+            "PREPARE stmt FROM @Sql; "
+        )
+        self.cursor.execute("EXECUTE stmt; ")
+        self.conn.commit()
+        report7_res = self.cursor.fetchall()
+        return report7_res
 
     # report 8 Restaurant Impact on Category Sales:  get data set
     def get_report8(self):
