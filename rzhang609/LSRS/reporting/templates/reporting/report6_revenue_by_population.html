@@ -14,34 +14,34 @@
 
             <br />
             <div class="align-items-center bg-purple rounded ">
-                <h1 class="col-md-20">
+                <h2 class="col-md-20">
                     <i class="bi bi-instagram"></i>
                     <p2>Revenue by Population</p2>
-                </h1>
+                </h2>
             </div>
 
             <br />
             <div class="align-items-center bg-purple rounded" id="divReport6">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     {% if report6 %}
-                    <table class="table table-bordered table-sm">
+                    <table class="table table-bordered table-sm text-center">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">Years</th>
-                                <th scope="col">Small City</th>
-                                <th scope="col">Medium City</th>
-                                <th scope="col">Large City</th>
-                                <th scope="col">Extra Large City</th>
+                                <th scope="col" class="align-middle">Years</th>
+                                <th scope="col" class="align-middle">Small City</th>
+                                <th scope="col" class="align-middle">Medium City</th>
+                                <th scope="col" class="align-middle">Large City</th>
+                                <th scope="col" class="align-middle">Extra Large City</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for tuple in report6 %}
                             <tr>
-                                <td>{{ tuple.Years }}</td>
-                                <td>{{ tuple.SmallCity }}</td>
-                                <td>{{ tuple.MediumCity }}</td>
-                                <td>{{ tuple.LargeCity }}</td>
-                                <td>{{ tuple.ExtraLargeCity }}</td>
+                                <td class="align-middle">{{ tuple.Years }}</td>
+                                <td class="align-middle">{{ tuple.SmallCity }}</td>
+                                <td class="align-middle">{{ tuple.MediumCity }}</td>
+                                <td class="align-middle">{{ tuple.LargeCity }}</td>
+                                <td class="align-middle">{{ tuple.ExtraLargeCity }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

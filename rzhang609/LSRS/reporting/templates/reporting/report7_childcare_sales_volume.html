@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Restaurant Impact on Category Sales</li>
+                    <li class="breadcrumb-item active" aria-current="page">Childcare Sales Volume</li>
                 </ol>
             </nav>
 
@@ -16,33 +16,31 @@
             <div class="align-items-center bg-purple rounded ">
                 <h2 class="col-md-20">
                     <i class="bi bi-instagram"></i>
-                    <p2>Restaurant Impact on Category Sales</p2>
+                    <p2>Childcare Sales Volume</p2>
                 </h2>
             </div>
 
             <br />
-            <div class="align-items-center bg-purple rounded" id="divReport8">
+            <div class="align-items-center bg-purple rounded" id="divReport7">
                 <div class="col-md-12">
-                    {% if report8 %}
-                    {% regroup report8 by Category as data_by_ctgy %}
+                    {% if report7 %}
                     <table class="table table-bordered table-sm text-center">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col" class="align-middle">Category</th>
-                                <th scope="col" class="align-middle">Store Type</th>
-                                <th scope="col" class="align-middle">Quantity Sold</th>
+                                {% for key in report7.0 %}
+                                <th scope="col" class="align-middle">{{ key }}</th>
+                                {% endfor %}
+                            </tr>
                         </thead>
                         <tbody>
-                            {% for tuple in data_by_ctgy %}
-                            {% for tuple_ctgyi in tuple.list %}
+                            {% for tuple in report7 %}
                             <tr>
-                                {% if forloop.first %}
-                                <td class="align-middle" rowspan="{{ tuple.list|length }}">{{ tuple.grouper }}</td>
-                                {% endif %}
-                                <td class="align-middle">{{ tuple_ctgyi.StoreType }}</td>
-                                <td class="align-middle">{{ tuple_ctgyi.QuantitySold }}</td>
+                                {% for key in tuple %}
+                                <td class="align-middle">
+                                    {{ tuple|hash:key }}
+                                </td>
+                                {% endfor %}
                             </tr>
-                            {% endfor %}
                             {% endfor %}
                         </tbody>
                     </table>

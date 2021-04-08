@@ -14,34 +14,34 @@
 
             <br />
             <div class="align-items-center bg-purple rounded ">
-                <h1 class="col-md-20">
+                <h2 class="col-md-20">
                     <i class="bi bi-instagram"></i>
                     <p2>Advertising Campaign Analysis</p2>
-                </h1>
+                </h2>
             </div>
 
             <br />
             <div class="align-items-center bg-purple rounded" id="divReport9">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     {% if report9 %}
-                    <table class="table table-bordered table-sm">
+                    <table class="table table-bordered table-sm text-center">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">Product ID</th>
-                                <th scope="col">Product Name</th>
-                                <th scope="col">Sold During Campaign</th>
-                                <th scope="col">Sold Outside Campaign</th>
-                                <th scope="col">Difference</th>
+                                <th scope="col" class="align-middle">Product ID</th>
+                                <th scope="col" class="align-middle">Product Name</th>
+                                <th scope="col" class="align-middle">Sold During Campaign</th>
+                                <th scope="col" class="align-middle">Sold Outside Campaign</th>
+                                <th scope="col" class="align-middle">Difference</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for tuple in report9 %}
                             <tr>
-                                <td>{{ tuple.ProductID }}</td>
-                                <td>{{ tuple.ProductName }}</td>
-                                <td>{{ tuple.SoldDuringCampaign }}</td>
-                                <td>{{ tuple.SoldOutsideCampaign }}</td>
-                                <td>{{ tuple.Difference }}</td>
+                                <td class="align-middle">{{ tuple.ProductID }}</td>
+                                <td class="align-middle">{{ tuple.ProductName }}</td>
+                                <td class="align-middle">{{ tuple.SoldDuringCampaign }}</td>
+                                <td class="align-middle">{{ tuple.SoldOutsideCampaign }}</td>
+                                <td class="align-middle">{{ tuple.Difference }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

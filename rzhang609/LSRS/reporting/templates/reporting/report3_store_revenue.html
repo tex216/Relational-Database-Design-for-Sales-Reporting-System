@@ -14,34 +14,34 @@
 
             <br />
             <div class="align-items-center bg-purple rounded ">
-                <h1 class="col-md-20">
+                <h2 class="col-md-20">
                     <i class="bi bi-instagram"></i>
                     <p2>Store Revenue by Year by State</p2>
-                </h1>
+                </h2>
             </div>
 
             <br />
             <div class="align-items-center bg-purple rounded" id="divReport3">
                 <div class="col-md-10">
                     {% if report3 %}
-                    <table class="table table-bordered table-sm">
+                    <table class="table table-bordered table-sm text-center">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">Store ID</th>
-                                <th scope="col">Store Address</th>
-                                <th scope="col">City Name</th>
-                                <th scope="col">Sales Year</th>
-                                <th scope="col">Total Revenue</th>
+                                <th scope="col" class="align-middle">Store ID</th>
+                                <th scope="col" class="align-middle">Store Address</th>
+                                <th scope="col" class="align-middle">City Name</th>
+                                <th scope="col" class="align-middle">Sales Year</th>
+                                <th scope="col" class="align-middle">Total Revenue</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for tuple in report3 %}
                             <tr>
-                                <td>{{ tuple.Store_ID }}</td>
-                                <td>{{ tuple.Street_Address }}</td>
-                                <td>{{ tuple.City_Name }}</td>
-                                <td>{{ tuple.Year }}</td>
-                                <td>{{ tuple.Revenue }}</td>
+                                <td class="align-middle">{{ tuple.Store_ID }}</td>
+                                <td class="align-middle">{{ tuple.Street_Address }}</td>
+                                <td class="align-middle">{{ tuple.City_Name }}</td>
+                                <td class="align-middle">{{ tuple.Year }}</td>
+                                <td class="align-middle">{{ tuple.Revenue }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
