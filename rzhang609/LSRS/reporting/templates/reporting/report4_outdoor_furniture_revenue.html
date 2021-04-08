@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Store Revenue by Year by State</li>
+                    <li class="breadcrumb-item active" aria-current="page">Outdoor Furniture Revenue</li>
                 </ol>
             </nav>
 
@@ -16,32 +16,30 @@
             <div class="align-items-center bg-purple rounded ">
                 <h1 class="col-md-20">
                     <i class="bi bi-instagram"></i>
-                    <p2>Store Revenue by Year by State</p2>
+                    <p2>Outdoor Furniture Revenue</p2>
                 </h1>
             </div>
 
             <br />
-            <div class="align-items-center bg-purple rounded" id="divReport3">
+            <div class="align-items-center bg-purple rounded" id="divReport4">
                 <div class="col-md-10">
-                    {% if report3 %}
+                    {% if report4 %}
                     <table class="table table-bordered table-sm">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">Store ID</th>
-                                <th scope="col">Store Address</th>
-                                <th scope="col">City Name</th>
-                                <th scope="col">Sales Year</th>
-                                <th scope="col">Total Revenue</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Total Number of Items Sold</th>
+                                <th scope="col">Average Number of Items Sold per Day</th>
+                                <th scope="col">Total Number of Items Sold on Groundhog Day</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for tuple in report3 %}
+                            {% for tuple in report4 %}
                             <tr>
-                                <td>{{ tuple.Store_ID }}</td>
-                                <td>{{ tuple.Street_Address }}</td>
-                                <td>{{ tuple.City_Name }}</td>
                                 <td>{{ tuple.Year }}</td>
-                                <td>{{ tuple.Revenue }}</td>
+                                <td>{{ tuple.Tot_Quantity }}</td>
+                                <td>{{ tuple.Avg_Quantity }}</td>
+                                <td>{{ tuple.GhDay_Quantity }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

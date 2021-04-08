@@ -1,0 +1,68 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<main class="container" role="main">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Actual versus Predicted Revenue for Couches and Sofas</li>
+                </ol>
+            </nav>
+
+            <br />
+            <div class="align-items-center bg-purple rounded ">
+                <h1 class="col-md-20">
+                    <i class="bi bi-instagram"></i>
+                    <p2>Actual versus Predicted Revenue for Couches and Sofas</p2>
+                </h1>
+            </div>
+
+            <br />
+            <div class="align-items-center bg-purple rounded" id="divReport2">
+                <div class="col-md-10">
+                    {% if report2 %}
+                    <table class="table table-bordered table-sm">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Product ID</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Product Retail Price</th>
+                                <th scope="col">Total Number of Items Sold</th>
+                                <th scope="col">Total Number of Items Sold at Discount Price</th>
+                                <th scope="col">Total Number of Items Sold at Retail Price</th>
+                                <th scope="col">Actual Revenue</th>
+                                <th scope="col">Predicted Revenue</th>
+                                <th scope="col">Difference</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tuple in report2 %}
+                            <tr>
+                                <td>{{ tuple.PID }}</td>
+                                <td>{{ tuple.Name }}</td>
+                                <td>{{ tuple.Price }}</td>
+                                <td>{{ tuple.Tot_UnitSold }}</td>
+                                <td>{{ tuple.Tot_UnitSold_AtDsct }}</td>
+                                <td>{{ tuple.Tot_UnitSold_AtRtl }}</td>
+                                <td>{{ tuple.Act_Revenue }}</td>
+                                <td>{{ tuple.Pred_Revenue }}</td>
+                                <td>{{ tuple.Diff_Act_Pred_Revenue }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <p>No Records!</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

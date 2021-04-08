@@ -25,6 +25,7 @@
                     <div class="col-xs-12 form-group">
                         <label class="col-xs-4" for="city_state_location">State:</label>
                         <select class="col-xs-8 form-control" name="city_state_location" id="city_state_location" data-placeholder="Select State"  required="required">
+                            <option value="">None</option>
                             <option value="-1">Select State</option>
                             {% for state in state_list %}
                             <option value="{{ state.State_Location }}">{{ state.State_Location }}</option>
@@ -33,7 +34,8 @@
                     </div>
                     <br/>
                     <div class="align-items-right bg-purple rounded" style="margin: 15px">
-                        <button class="btn btn-primary active" id="btnReport3"  type="submit" >
+
+                        <button class="btn btn-primary active" id="btnReport3" type="submit" >
                             Run Report
                         </button>
                     </div>
@@ -43,5 +45,6 @@
         </div>
     </div>
 </main>
+
 
 {% endblock %}
