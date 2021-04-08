@@ -99,6 +99,11 @@
                     });
                     $('#city_name').html(selectContent);
                     $('#city_name').attr("disabled", false);
+                    $('#city_population').val('');
+                    $("#city_population").attr("readonly", true);
+                    $('#hid_city_population').val('')
+                    $("#btnSubmit").attr("disabled", true);
+                    $("#btnSubmit").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
                  },
                  fail: function() {
                     $("#hidStatus").val("failed");
@@ -144,6 +149,8 @@
                     $('#city_population').val(response[0].Population)
                     $("#city_population").attr("readonly", false);
                     $('#hid_city_population').val(response[0].Population)
+                    $("#btnSubmit").attr("disabled", true);
+                    $("#btnSubmit").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
                  },
                  fail: function() {
                     $("#hidStatus").val("failed");
