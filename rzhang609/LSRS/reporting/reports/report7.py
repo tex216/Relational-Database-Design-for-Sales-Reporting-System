@@ -15,7 +15,7 @@ def hash(object, attr):
     if (isinstance(value, str)):
         return value
     else:
-        return int(value)
+        return "{:.2f}".format(value)
 
 
 class GetReport(generic.ListView):

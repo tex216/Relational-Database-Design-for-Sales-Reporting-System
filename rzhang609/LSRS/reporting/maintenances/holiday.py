@@ -32,6 +32,7 @@ def add_new_holiday(request):
                     obj.close()
                     context = {
                         'message': "Holiday has already existed with name: {0} and date: {1}.".format(holiday_name, holiday_date),
+                        'isWarning': is_holiday_existed > 0
                     }
                     return render(request, 'reporting/holiday_add_holiday.html', context)
 
@@ -44,7 +45,7 @@ def add_new_holiday(request):
             except Exception as e:
                 context = {
                     'message': "Exception {0} based on holiday name {1} "
-                               "and holiday date {2}".format(str(e),holiday_name,  holiday_date)
+                               "and holiday date {2}".format(str(e), holiday_name,  holiday_date)
                 }
             return render(request, 'reporting/holiday_add_holiday.html', context)
     else:

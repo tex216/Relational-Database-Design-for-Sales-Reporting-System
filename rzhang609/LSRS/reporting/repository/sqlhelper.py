@@ -74,7 +74,7 @@ class SqlHelper(object):
 
     # holiday maintenance: get the holiday list
     def get_holiday_list(self):
-        self.cursor.execute("SELECT Date, GROUP_CONCAT(Name) AS Name "
+        self.cursor.execute("SELECT Date, GROUP_CONCAT(Name SEPARATOR ', ') AS Name "
                             "FROM Holiday "
                             "GROUP BY Date "
                             "ORDER BY DATE DESC;")

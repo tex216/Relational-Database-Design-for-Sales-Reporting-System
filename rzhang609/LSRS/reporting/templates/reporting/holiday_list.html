@@ -45,15 +45,15 @@ form {
                     <table class="table text-center table-bordered">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col" class="align-middle col-md-4">Holiday Date</th>
-                            <th scope="col" class="align-middle col-md-8">Holiday Name</th>
+                            <th scope="col" class="align-middle">Holiday Date</th>
+                            <th scope="col" class="align-middle">Holiday Name</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for holiday in holidayList %}
                         <tr>
-                            <td class="col-md-4 align-middle">{{ holiday.Date|date:"M Y" }}</td>
-                            <td class="col-md-8 align-middle">{{ holiday.Name }}</td>
+                            <td class="align-middle">{{ holiday.Date|date:"M d, Y" }}</td>
+                            <td class="align-middle">{{ holiday.Name }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
