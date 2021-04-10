@@ -56,13 +56,9 @@
     $("#year_list").change(function() {
 
             var selected_year = $("#year_list option:selected");
-            if (typeof selected_year === "undefined") {
+            if (typeof selected_year === "undefined" || selected_year.val() === "") {
                 $("#hidStatus").val("failed");
                 $("#hidMessage").val("Please select appropriate year.");
-                return;
-            }
-
-            if (selected_year.val() === "" ) {
                 $('#month_list').html('');
                 $('#month_list').attr("disabled", true);
                 $("#btnReport5").attr("disabled", true);
