@@ -34,7 +34,7 @@
                     <br/>
                     <div class="align-items-right bg-purple rounded" style="margin: 15px">
 
-                        <button class="btn btn-primary active" id="btnReport3" type="submit" >
+                        <button class="btn btn-primary active" disabled = "disabled" id="btnReport3" type="submit" >
                             Run Report
                         </button>
                     </div>
@@ -45,5 +45,25 @@
     </div>
 </main>
 
+
+<script>
+
+    $( document ).ready(function() {
+    });
+
+    $("#city_state_location").change(function() {
+        var selected_state = $("#city_state_location option:selected");
+        if (selected_state.val() !== "" && selected_state.val() !== "-1") {
+            $("#btnReport3").attr("disabled", false);
+        }
+        if (selected_state.val() === "-1") {
+            $("#btnReport3").attr("disabled", true);
+        }
+    });
+
+
+
+
+</Script>
 
 {% endblock %}

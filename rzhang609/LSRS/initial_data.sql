@@ -6,7 +6,8 @@ VALUES
 ('WA', 'Seattle', 3700000), 
 ('CA', 'Los Angeles', 3792621),
 ('CA', 'San Diego', 1423851),
-('IL', 'Chicago', 2695598);
+('IL', 'Chicago', 2695598),
+('NC','Raleign',300000);
 
 
 INSERT INTO Day
@@ -26,27 +27,29 @@ VALUES
 ('2012-6-3'),
 ('2013-4-28'),
 ('2013-4-29'),
-('2013-9-02');
+('2013-9-02'),
+('2020-12-25'),('2021-01-02'),('2021-01-03'),('2021-02-01'),('2021-03-01'),('2021-03-02');
 
 
 INSERT INTO Holiday(DATE, Name)
-VALUES('2021-01-01', 'New Year');
+VALUES('2021-01-01', 'New Year'), ('2020-12-25','Christmas');
 
 INSERT INTO CHILDCARE
 VALUES 
 (30),
-(60);
+(60),
+(120);
 
 
 
 
 INSERT INTO STORE
 VALUES 
-('Store_Number_1', '1234567891', 'Street_Address_1', 1, 0, 'NY', 'New York', 30),
-('Store_Number_2', '1234567892', 'Street_Address_2', 0, 0, 'NY', 'New York', 60),
-('Store_Number_3', '1234567893', 'Street_Address_3', 1, 1, 'NY', 'New York', 30),
-('Store_Number_4', '1234567894', 'Street_Address_4', 0, 0, 'NY', 'New York', 30),
-('Store_Number_5', '1234567895', 'Street_Address_5', 1, 1, 'IL', 'Chicago', 30),
+('Store_Number_1','1234567890','Street_Address_1',0,0,'NY','New York',60),
+('Store_Number_2','9175624545','Street_Address_2',1,0,'NY','Buffalo',30),
+('Store_Number_3','6519192954','Street_Address_3',1,1,'WA','Seattle',120),
+('Store_Number_4','4587965145','Street_Address_4',1,0,'NY','Buffalo',NULL),
+('Store_Number_5','4568521549','Street_Address_5',1,1,'NC','Raleign',NULL),
 ('Store_Number_6', '1234567896', 'Street_Address_6', 0, 0, 'IL', 'Chicago', 60),
 ('Store_Number_7', '1234567897', 'Street_Address_7', 1, 1, 'CA', 'Los Angeles', 60),
 ('Store_Number_8', '1234567898', 'Street_Address_8', 0, 0, 'CA', 'Los Angeles', 60),
@@ -67,7 +70,12 @@ VALUES
 ('PID_1', 'Product_Name_1', 10), 
 ('PID_2', 'Product_Name_2', 20),
 ('PID_3', 'Product_Name_3', 30),
-('PID_4', 'Product_Name_4', 400);
+('PID_4', 'Product_Name_4', 400), 
+('1','Chair',125),
+('2','Desk',160),
+('3','Mattress',500),
+('4','Sofa',4200),
+('5','Dining table',1900);
 
 INSERT INTO CATEGORY
 VALUES 
@@ -75,7 +83,8 @@ VALUES
 ('Pots and Pans'),
 ('Couches and Sofas'),
 ('Outdoor Furniture'),
-('NO product category');
+('NO product category'),
+('Bedroom'),('Dining Room'),('Living Room');
 
 INSERT INTO ASSIGNED
 VALUES 
@@ -116,7 +125,19 @@ VALUES
 ('2012-06-03', 'Store_Number_1', 'PID_1', 5000, 80000),
 ('2013-04-28', 'Store_Number_1', 'PID_4', 10000, 350000),
 ('2013-04-29', 'Store_Number_1', 'PID_4', 1000, 35000),
-('2013-09-02', 'Store_Number_1', 'PID_3', 100, 20);
+('2013-09-02', 'Store_Number_1', 'PID_3', 100, 20),
+ ('2020-11-26','Store_Number_3','3',20,10000),('2021-01-01','Store_Number_2','3',10,5000),
+('2021-01-02','Store_Number_1','1',20,2500),('2021-01-03','Store_Number_3','2',10,1600),('2021-02-01','Store_Number_2','4',10,42000),
+('2021-03-01','Store_Number_1','5',10,19000),('2021-03-02','Store_Number_3','1',20,2500),('2021-03-02','Store_Number_3','5',10,2500),
+('2021-03-02','Store_Number_5','1',20,2500);
+
+INSERT INTO `HOLD` 
+VALUES ('2021-01-01','New Year Ad Campaign'),('2021-01-02','New Year Ad Campaign'),('2021-01-03','New Year Ad Campaign'),('2020-11-26','Thanksgiving Ad Campaign');
+
+
+
+
+
 
 
 

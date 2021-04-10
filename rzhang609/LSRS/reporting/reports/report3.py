@@ -34,7 +34,7 @@ def store_revenue(request):
             try:
                 obj = SqlHelper()
                 report3 = obj.report3_store_revenue_by_year_by_state(state_location)
-               # state_list = obj.get_state_list()
+                message = state_location + ' report'
                 obj.close()
                 print(report3)
                 context = {
