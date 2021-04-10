@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Store Revenue by Year by State</li>
+                    <li class="breadcrumb-item active" aria-current="page">Get State List</li>
                 </ol>
             </nav>
 
@@ -32,11 +32,8 @@
                         </select>
                     </div>
                     <br/>
-                    <div class="align-items-right bg-purple rounded" style="margin: 15px">
-
-                        <button class="btn btn-primary active" disabled = "disabled" id="btnReport3" type="submit" >
-                            Run Report
-                        </button>
+                    <div class="col-xs-12 form-group">
+                        <input class="btnSubmit btn btn-md btn-secondary" id="btnReport3" type="submit" value="Run Report" disabled/>
                     </div>
                 </form>
             </div>
@@ -55,9 +52,11 @@
         var selected_state = $("#city_state_location option:selected");
         if (selected_state.val() !== "" && selected_state.val() !== "-1") {
             $("#btnReport3").attr("disabled", false);
+            $("#btnReport3").removeClass("btn-secondary").addClass("btn-primary active");
         }
         if (selected_state.val() === "-1") {
             $("#btnReport3").attr("disabled", true);
+            $("#btnReport3").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
         }
     });
 

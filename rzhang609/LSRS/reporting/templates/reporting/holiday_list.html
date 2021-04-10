@@ -42,20 +42,18 @@ form {
             <div class="align-items-center bg-purple rounded" id="divHolidayList">
                 <div class="col-md-12">
                     {% if holidayList %}
-                    <table class="table">
+                    <table class="table text-center table-bordered">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Holiday Date</th>
-                            <th scope="col">Holiday Name</th>
+                            <th scope="col" class="align-middle col-md-4">Holiday Date</th>
+                            <th scope="col" class="align-middle col-md-8">Holiday Name</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for holiday in holidayList %}
                         <tr>
-                            <th scope="row"></th>
-                            <td>{{ holiday.Date }}</td>
-                            <td>{{ holiday.Name }}</td>
+                            <td class="col-md-4 align-middle">{{ holiday.Date|date:"M Y" }}</td>
+                            <td class="col-md-8 align-middle">{{ holiday.Name }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>

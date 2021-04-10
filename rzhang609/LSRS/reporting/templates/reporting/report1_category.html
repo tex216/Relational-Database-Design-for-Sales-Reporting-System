@@ -38,10 +38,10 @@
                             {% for tuple in report1 %}
                             <tr class="text-center">
                                 <td class="align-middle">{{ tuple.Cate_Name }}</td>
-                                <td class="align-middle">{{ tuple.Cnt_Product }}</td>
-                                <td class="align-middle">{{ tuple.Min_RtlPrc }}</td>
-                                <td class="align-middle">{{ tuple.Avg_RtlPrc }}</td>
-                                <td class="align-middle">{{ tuple.Max_RtlPrc }}</td>
+                                <td class="align-middle">{{ tuple.Cnt_Product}}</td>
+                                <td class="align-middle">{{ tuple.Min_RtlPrc|default_if_none:0.00|floatformat:2}}</td>
+                                <td class="align-middle">{{ tuple.Avg_RtlPrc|default_if_none:0.00|floatformat:2}}</td>
+                                <td class="align-middle">{{ tuple.Max_RtlPrc|default_if_none:0.00|floatformat:2}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

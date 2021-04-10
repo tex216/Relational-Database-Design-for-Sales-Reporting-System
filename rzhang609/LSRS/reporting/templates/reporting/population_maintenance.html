@@ -13,10 +13,10 @@
             </nav>
 
             <div class="align-items-center  bg-purple rounded ">
-                <h1 class="mb-4">
+                <h2 class="mb-4">
                     <i class="bi bi-people"></i>
                     <p2>Population</p2>
-                </h1>
+                </h2>
             </div>
 
             <div class="align-items-center bg-purple rounded" id="divCityPopulation">
@@ -37,7 +37,7 @@
                         </select>
                     </div>
                     <div class="col-xs-12 form-group">
-                        <label class="col-xs-4"  for="city_population">Population:</label>
+                        <label class="col-xs-4"  for="city_population">Population (0 ~ 999999999):</label>
                         <input class="col-xs-8 form-control" type="text" id="city_population" name="city_population" onkeyup="value=value.replace(/[^\d]/g,'')" required="required" autocomplete="off"  readonly>
                         <input class="col-xs-8 form-control" type="hidden" id="hid_city_population" name="hid_city_population" style="display: none" value="">
                     </div>
@@ -163,11 +163,14 @@
         $('#city_population').on('input',function(e){
             ClearAlertMessage();
 
-            if($('#city_population').val() == "" || $('#city_population').val().length > 12) {
+            if(!$.isNumeric($('#city_population').val()))
+                return;
+
+            if($('#city_population').val() == "" || $('#city_population').val().length > 9) {
                 $("#btnSubmit").attr("disabled", true);
                 $("#btnSubmit").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
                 $("#hidStatus").val("failed");
-                $("#hidMessage").val("Inputted city population is invalid.");
+                $("#hidMessage").val("Inputted city population range should be 0 ~ 999999999");
                 ShowAlertDiv();
                 return;
             }

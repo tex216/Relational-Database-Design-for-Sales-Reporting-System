@@ -20,7 +20,7 @@ def add_new_holiday(request):
         form = AddHolidayForm(request.POST)
 
         if form.is_valid():
-            holiday_name= request.POST.get('holiday_name')
+            holiday_name = request.POST.get('holiday_name')
             holiday_date = request.POST.get('holiday_date')
 
             try:
@@ -31,7 +31,7 @@ def add_new_holiday(request):
                 if is_holiday_existed > 0:
                     obj.close()
                     context = {
-                        'message': "Holiday is existed with name: {0} and date: {1}".format(holiday_name, holiday_date),
+                        'message': "Holiday has already existed with name: {0} and date: {1}.".format(holiday_name, holiday_date),
                     }
                     return render(request, 'reporting/holiday_add_holiday.html', context)
 

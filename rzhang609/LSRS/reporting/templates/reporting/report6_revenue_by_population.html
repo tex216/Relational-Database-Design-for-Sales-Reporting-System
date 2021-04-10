@@ -28,20 +28,20 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col" class="align-middle">Years</th>
-                                <th scope="col" class="align-middle">Small City</th>
-                                <th scope="col" class="align-middle">Medium City</th>
-                                <th scope="col" class="align-middle">Large City</th>
-                                <th scope="col" class="align-middle">Extra Large City</th>
+                                <th scope="col" class="align-middle">Small City <br/> (population < 3,700,000))</th>
+                                <th scope="col" class="align-middle">Medium City <br/> (population >=3,700,000 and <6,700,000) </th>
+                                <th scope="col" class="align-middle">Large City <br/> (population >=6,700,000 and <9,000,000) </th>
+                                <th scope="col" class="align-middle">Extra Large City <br/>  (population >=9,000,000)</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for tuple in report6 %}
                             <tr>
                                 <td class="align-middle">{{ tuple.Years }}</td>
-                                <td class="align-middle">{{ tuple.SmallCity }}</td>
-                                <td class="align-middle">{{ tuple.MediumCity }}</td>
-                                <td class="align-middle">{{ tuple.LargeCity }}</td>
-                                <td class="align-middle">{{ tuple.ExtraLargeCity }}</td>
+                                <td class="align-middle">{{ tuple.SmallCity|default_if_none:0.00|floatformat:2 }}</td>
+                                <td class="align-middle">{{ tuple.MediumCity|default_if_none:0.00|floatformat:2 }}</td>
+                                <td class="align-middle">{{ tuple.LargeCity|default_if_none:0.00|floatformat:2 }}</td>
+                                <td class="align-middle">{{ tuple.ExtraLargeCity|default_if_none:0.00|floatformat:2 }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

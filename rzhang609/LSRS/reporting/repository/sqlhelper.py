@@ -11,20 +11,23 @@ class SqlHelper(object):
 
     # dashboard the count of stores
     def get_count_of_store(self):
-        self.cursor.execute("SELECT COUNT(Store_Number) AS Count FROM STORE")
+        self.cursor.execute("SELECT COUNT(Store_Number) AS Count FROM STORE;")
         count_of_store = self.cursor.fetchall()
         return count_of_store
 
     # dashboard the count of stores offering food
     def get_count_stores_offering_food(self):
-        self.cursor.execute("SELECT COUNT(Store_Number) AS Count FROM STORE "
+        self.cursor.execute("SELECT COUNT(Store_Number) AS Count "
+                            "FROM STORE "
                             "WHERE Has_Restaurant IS TRUE OR Has_Snack_Bar IS TRUE;")
         count_stores_offering_food = self.cursor.fetchall()
         return count_stores_offering_food
 
     # dashboard the count of stores offering childcare
     def get_count_stores_offering_childcare(self):
-        self.cursor.execute("SELECT COUNT(Store_Number) AS Count FROM STORE WHERE Time_Limit IS NOT NULL;")
+        self.cursor.execute("SELECT COUNT(Store_Number) AS Count "
+                            "FROM STORE "
+                            "WHERE Time_Limit IS NOT NULL;")
         count_stores_offering_childcare = self.cursor.fetchall()
         return count_stores_offering_childcare
 
@@ -42,13 +45,14 @@ class SqlHelper(object):
 
     # population maintenance: get the state list
     def get_state_list(self):
-        self.cursor.execute("SELECT DISTINCT State_Location FROM CITY ORDER BY State_Location ASC")
+        self.cursor.execute("SELECT DISTINCT State_Location FROM CITY ORDER BY State_Location ASC;")
         state_list = self.cursor.fetchall()
         return state_list
 
     # population maintenance: get the city list of selected state
     def get_city_list(self, state_location):
-        self.cursor.execute("SELECT city_name FROM CITY WHERE State_Location = %s ORDER BY city_name ASC;",
+        self.cursor.execute("SELECT city_name FROM CITY "
+                            "WHERE State_Location = %s ORDER BY city_name ASC;",
                             [state_location])
         city_list = self.cursor.fetchall()
         return city_list
@@ -70,7 +74,10 @@ class SqlHelper(object):
 
     # holiday maintenance: get the holiday list
     def get_holiday_list(self):
-        self.cursor.execute("SELECT Name, Date FROM Holiday")
+        self.cursor.execute("SELECT Date, GROUP_CONCAT(Name) AS Name "
+                            "FROM Holiday "
+                            "GROUP BY Date "
+                            "ORDER BY DATE DESC;")
         holiday_list = self.cursor.fetchall()
         return holiday_list
 
@@ -132,29 +139,32 @@ class SqlHelper(object):
 
     # Report 3_Store Revenue by Year by State: Get Available State List
     def get_state_list(self):
-        self.cursor.execute("SELECT DISTINCT State_Location FROM CITY ORDER BY State_Location ASC")
+        self.cursor.execute("SELECT DISTINCT State_Location FROM CITY ORDER BY State_Location ASC;")
         state_list = self.cursor.fetchall()
         return state_list
 
     # Report 3_Store Revenue by Year by State
     def report3_store_revenue_by_year_by_state(self, state_location):
-        self.cursor.execute("SELECT STORE.Store_Number AS Store_ID, Street_Address, City_Name, YEAR(Date) AS Year"
+        self.cursor.execute("SELECT STORE.Store_Number AS Store_ID"
+                            ", Street_Address"
+                            ", City_Name"
+                            ", YEAR(Date) AS Year"
                             ", SUM(IFNULL(Total_Amount, 0)) AS Revenue "
                             "FROM STORE "
                             "LEFT JOIN SALE ON STORE.Store_Number = SALE.Store_Number "
                             "WHERE STORE.State_Location = %s"
                             "GROUP BY STORE.Store_Number, YEAR(Date)"
                             "ORDER BY YEAR(Date) ASC, Revenue DESC;", [state_location])
-
         report3_res = self.cursor.fetchall()
         return report3_res
 
     # report 4 Outdoor Furniture Revenue: get data set
     def get_report4(self):
         self.cursor.execute(
-            "SELECT YEAR(Date) AS Year, SUM(IFNULL(Quantity, 0)) AS Tot_Quantity, "
-            "(SUM(IFNULL(Quantity, 0)) / 365) AS Avg_Quantity, "
-            "SUM(IF(MONTH(Date)=2 AND DAY(Date)=2,1,0) * IFNULL(Quantity, 0)) AS GhDay_Quantity "
+            "SELECT YEAR(Date) AS Year"
+            ", SUM(IFNULL(Quantity, 0)) AS Tot_Quantity"
+            ", (SUM(IFNULL(Quantity, 0)) / 365) AS Avg_Quantity"
+            ", SUM(IF(MONTH(Date)=2 AND DAY(Date)=2,1,0) * IFNULL(Quantity, 0)) AS GhDay_Quantity "
             "FROM CATEGORY AS C "
             "LEFT JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
             "LEFT JOIN PRODUCT AS P ON A.PID = P.PID "
@@ -174,7 +184,8 @@ class SqlHelper(object):
 
     # report 5 Get Month list
     def get_month_list(self, selected_year):
-        self.cursor.execute("SELECT DISTINCT MONTH(`Date`) AS `Month` FROM `Day` WHERE YEAR(`Date`) = %s "
+        self.cursor.execute("SELECT DISTINCT MONTH(`Date`) AS `Month` "
+                            "FROM `Day` WHERE YEAR(`Date`) = %s "
                             "ORDER BY `Month` DESC;",
                             [selected_year])
         month_list = self.cursor.fetchall()
@@ -183,7 +194,8 @@ class SqlHelper(object):
     # report 5 State with Highest Volume: get data set
     def get_report5(self, selected_year, selected_month):
         self.cursor.execute(
-            "SELECT C.Category_Name, T.State_Location, SUM(IFNULL(S.Quantity,0)) AS Tot_UnitSold FROM CATEGORY AS C "
+            "SELECT C.Category_Name, T.State_Location, SUM(IFNULL(S.Quantity,0)) AS Tot_UnitSold "
+            "FROM CATEGORY AS C "
             "LEFT JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
             "LEFT JOIN PRODUCT AS P ON A.PID = P.PID "
             "LEFT JOIN SALE AS S ON P.PID = S.PID AND YEAR(S.`Date`) = %s AND MONTH(S.`Date`) = %s "
@@ -194,9 +206,9 @@ class SqlHelper(object):
             "FROM CATEGORY AS C2 "
             "LEFT JOIN ASSIGNED AS A2 ON C2.Category_Name = A2.Category_Name "
             "LEFT JOIN PRODUCT AS P2 ON A2.PID = P2.PID "
-            "LEFT JOIN SALE AS S2 ON P2.PID = S2.PID AND YEAR(S2.`Date`) = %s AND "
-            "MONTH(S2.`Date`) = %s "
-            "LEFT JOIN STORE AS T2 ON S2.Store_Number = T2.Store_Number WHERE C2.Category_Name = C.Category_Name "
+            "LEFT JOIN SALE AS S2 ON P2.PID = S2.PID AND YEAR(S2.`Date`) = %s AND MONTH(S2.`Date`) = %s "
+            "LEFT JOIN STORE AS T2 ON S2.Store_Number = T2.Store_Number "
+            "WHERE C2.Category_Name = C.Category_Name "
             "GROUP BY C2.Category_Name, T2.State_Location "
             ") ORDER BY C.Category_Name ASC;", ([selected_year], [selected_month], [selected_year], [selected_month]))
         report5_res = self.cursor.fetchall()
@@ -205,14 +217,18 @@ class SqlHelper(object):
     # Report 6_Revenue by population
     def report6_revenue_by_population(self):
         self.cursor.execute(
-            "SELECT YEAR(SRC.`Date`) AS Years, SUM(IF(Population < 3700000, Total_Amount, 0)) AS SmallCity, "
-            "SUM(IF(Population >= 3700000 AND Population < 6700000, Total_Amount, 0)) AS MediumCity, "
-            "SUM(IF(Population >= 6700000 AND Population < 9000000, Total_Amount, 0)) AS LargeCity, SUM(IF(Population "
-            ">= 9000000, Total_Amount, 0)) AS ExtraLargeCity "
-            "FROM (SELECT SALE.`Date`, SALE.Total_Amount, CITY.Population FROM CITY INNER JOIN STORE ON "
-            "CITY.State_Location = STORE.State_Location AND CITY.City_Name = STORE.City_Name INNER JOIN SALE ON "
-            "STORE.Store_Number = SALE.Store_Number) AS SRC "
-            "GROUP BY YEAR(SRC.`Date`) ORDER BY YEAR(SRC.`Date`) ASC;"
+            "SELECT YEAR(SRC.`Date`) AS Years"
+            ", SUM(IF(Population < 3700000, Total_Amount, 0)) AS SmallCity"
+            ", SUM(IF(Population >= 3700000 AND Population < 6700000, Total_Amount, 0)) AS MediumCity"
+            ", SUM(IF(Population >= 6700000 AND Population < 9000000, Total_Amount, 0)) AS LargeCity"
+            ", SUM(IF(Population >= 9000000, Total_Amount, 0)) AS ExtraLargeCity "
+            "FROM ("
+            "SELECT SALE.`Date`, SALE.Total_Amount, CITY.Population "
+            "FROM CITY "
+            "INNER JOIN STORE ON CITY.State_Location = STORE.State_Location AND CITY.City_Name = STORE.City_Name "
+            "INNER JOIN SALE ON STORE.Store_Number = SALE.Store_Number) AS SRC "
+            "GROUP BY YEAR(SRC.`Date`) "
+            "ORDER BY YEAR(SRC.`Date`) ASC;"
         )
         report6_res = self.cursor.fetchall()
         return report6_res
@@ -231,7 +247,7 @@ class SqlHelper(object):
         )
         self.cursor.execute(
             "SET @Sql = CONCAT('SELECT Sale_Year_Month,',LEFT(@Sql, LENGTH(@Sql)-1),' FROM ( "
-            "SELECT DATE_FORMAT(SALE.`Date`, \"%Y %M\") AS Sale_Year_Month, SALE.Total_Amount AS Total_Amount, "
+            "SELECT DATE_FORMAT(SALE.`Date`, \"%Y-%m\") AS Sale_Year_Month, SALE.Total_Amount AS Total_Amount, "
             "IF( STORE.Time_Limit IS NOT NULL, CAST(STORE.Time_Limit AS CHAR(10)), \"No childcare\") AS Childcare_Category "
             "FROM STORE INNER JOIN SALE ON STORE.Store_Number = SALE.Store_Number "
             "WHERE SALE.`Date` >= DATE_ADD( LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 12 MONTH) ), INTERVAL 1 DAY)) AS REV "
@@ -250,9 +266,11 @@ class SqlHelper(object):
         self.cursor.execute(
             "SELECT COLS.Category, COLS.`Store Type` AS StoreType, IFNULL(ACT.`Quantity Sold`, 0) AS QuantitySold "
             "FROM "
-            "( ( SELECT C01.Category_Name AS Category, 'Restaurant' AS `Store Type` FROM CATEGORY AS C01) "
+            "( ( SELECT C01.Category_Name AS Category, 'Restaurant' AS `Store Type` "
+            "FROM CATEGORY INNER JOIN ASSIGNED AS C01) "
             "UNION "
-            "( SELECT C02.Category_Name AS Category, 'Non-restaurant' AS `Store Type` FROM CATEGORY AS C02) ) "
+            "( SELECT C02.Category_Name AS Category, 'Non-restaurant' AS `Store Type` "
+            "FROM CATEGORY INNER JOIN ASSIGNED AS C02) ) "
             "AS COLS "
             "LEFT JOIN "
             "(SELECT C.Category_Name AS Category, "
@@ -274,8 +292,11 @@ class SqlHelper(object):
     # report 9 Advertising Campaign Analysis: get data set
     def get_report9(self):
         self.cursor.execute(
-            "SELECT `Product ID` AS ProductID, `Product Name` AS ProductName, "
-            "`Sold During Campaign` AS SoldDuringCampaign, `Sold Outside Campaign` AS SoldOutsideCampaign, Difference "
+            "SELECT `Product ID` AS ProductID"
+            ", `Product Name` AS ProductName"
+            ", `Sold During Campaign` AS SoldDuringCampaign"
+            ", `Sold Outside Campaign` AS SoldOutsideCampaign"
+            ", Difference "
             "FROM( "
             "( "
             "SELECT P.PID AS `Product ID`, P.Product_Name AS `Product Name`, "
@@ -295,10 +316,11 @@ class SqlHelper(object):
             ") "
             "UNION "
             "( "
-            "SELECT P2.PID AS `Product ID`, P2.Product_Name AS `Product Name`, "
-            "SUM(IF(A2.`Description` IS NULL,0,1) * IFNULL(S2.Quantity,0)) AS `Sold During Campaign`, "
-            "SUM(IF(A2.`Description` IS NULL,1,0) * IFNULL(S2.Quantity,0)) AS `Sold Outside Campaign`, "
-            "(SUM(IF(A2.`Description` IS NULL,0,1) * IFNULL(S2.Quantity,0)) - "
+            "SELECT P2.PID AS `Product ID`"
+            ", P2.Product_Name AS `Product Name`"
+            ", SUM(IF(A2.`Description` IS NULL,0,1) * IFNULL(S2.Quantity,0)) AS `Sold During Campaign`"
+            ", SUM(IF(A2.`Description` IS NULL,1,0) * IFNULL(S2.Quantity,0)) AS `Sold Outside Campaign`"
+            ", (SUM(IF(A2.`Description` IS NULL,0,1) * IFNULL(S2.Quantity,0)) - "
             "SUM(IF(A2.`Description` IS NULL,1,0) * IFNULL(S2.Quantity,0))) AS Difference "
             "FROM PRODUCT AS P2 "
             "INNER JOIN DISCOUNT AS I2 ON P2.PID = I2.PID "
