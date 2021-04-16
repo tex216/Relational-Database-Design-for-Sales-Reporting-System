@@ -66,6 +66,9 @@
 <script>
 $( document ).ready(function() {
     $( '#holiday_date' ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange:'c-30:c+10',
         dateFormat: 'yy-mm-dd',
     });
 
@@ -78,6 +81,7 @@ $( document ).ready(function() {
     });
 
     function SubmitButtonStatus(){
+        $('#divMessage').css('display','none');
         var holiday_name = $('#holiday_name').val();
         var holiday_date = $('#holiday_date').val();
 
