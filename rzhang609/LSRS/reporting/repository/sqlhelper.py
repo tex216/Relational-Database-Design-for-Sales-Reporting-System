@@ -253,7 +253,7 @@ class SqlHelper(object):
         )
         self.cursor.execute(
             "SET @Sql = CONCAT('SELECT DATE_FORMAT(REV.`Date`, \"%Y-%m\") AS Sale_Year_Month,',LEFT(@Sql, LENGTH(@Sql)-1),' FROM ( "
-            "SELECT SALE.`Date`, SALE.Total_Amount AS Total_Amount, "
+            "SELECT SALE.`Date`, ROUND(SALE.Total_Amount, 2) AS Total_Amount, "
             "IF( STORE.Time_Limit IS NOT NULL, CAST(STORE.Time_Limit AS CHAR(10)), \"No childcare\") AS Childcare_Category "
             "FROM STORE INNER JOIN SALE ON STORE.Store_Number = SALE.Store_Number "
             ") AS REV "
