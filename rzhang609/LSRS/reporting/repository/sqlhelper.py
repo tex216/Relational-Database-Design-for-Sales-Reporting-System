@@ -246,12 +246,14 @@ class SqlHelper(object):
             ") AS TL; "
         )
         self.cursor.execute(
-            "SET @Sql = CONCAT('SELECT Sale_Year_Month,',LEFT(@Sql, LENGTH(@Sql)-1),' FROM ( "
-            "SELECT DATE_FORMAT(SALE.`Date`, \"%Y-%m\") AS Sale_Year_Month, SALE.Total_Amount AS Total_Amount, "
+            "SET @Sql = CONCAT('SELECT DATE_FORMAT(REV.`Date`, \"%Y-%m\") AS Sale_Year_Month,',LEFT(@Sql, LENGTH(@Sql)-1),' FROM ( "
+            "SELECT SALE.`Date`, SALE.Total_Amount AS Total_Amount, "
             "IF( STORE.Time_Limit IS NOT NULL, CAST(STORE.Time_Limit AS CHAR(10)), \"No childcare\") AS Childcare_Category "
             "FROM STORE INNER JOIN SALE ON STORE.Store_Number = SALE.Store_Number "
-            "WHERE SALE.`Date` >= DATE_ADD( LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 12 MONTH) ), INTERVAL 1 DAY)) AS REV "
-            "GROUP BY Sale_Year_Month ORDER BY Sale_Year_Month ASC'); "
+            ") AS REV "
+            "GROUP BY Sale_Year_Month "
+            "HAVING Sale_Year_Month >= (SELECT DATE_FORMAT(DATE_SUB(MAX(SALE.`Date`), INTERVAL 1 YEAR), \"%Y-%m\") FROM SALE) "
+            "ORDER BY Sale_Year_Month ASC'); "
         )
         self.cursor.execute(
             "PREPARE stmt FROM @Sql; "
