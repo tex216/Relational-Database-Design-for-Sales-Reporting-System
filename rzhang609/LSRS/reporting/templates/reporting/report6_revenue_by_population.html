@@ -38,10 +38,10 @@
                             {% for tuple in report6 %}
                             <tr>
                                 <td class="align-middle">{{ tuple.Years }}</td>
-                                <td class="align-middle">{{ tuple.SmallCity|default_if_none:0.00|floatformat:2 }}</td>
-                                <td class="align-middle">{{ tuple.MediumCity|default_if_none:0.00|floatformat:2 }}</td>
-                                <td class="align-middle">{{ tuple.LargeCity|default_if_none:0.00|floatformat:2 }}</td>
-                                <td class="align-middle">{{ tuple.ExtraLargeCity|default_if_none:0.00|floatformat:2 }}</td>
+                                <td class="align-middle">{{ tuple.SmallCity }}</td>
+                                <td class="align-middle">{{ tuple.MediumCity }}</td>
+                                <td class="align-middle">{{ tuple.LargeCity }}</td>
+                                <td class="align-middle">{{ tuple.ExtraLargeCity }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

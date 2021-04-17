@@ -46,7 +46,7 @@
                                 <td class="align-middle">{{ tuple.Street_Address }}</td>
                                 <td class="align-middle">{{ tuple.City_Name }}</td>
                                 <td class="align-middle">{{ tuple.Year }}</td>
-                                <td class="align-middle">{{ tuple.Revenue|default_if_none:0.00|floatformat:2 }}</td>
+                                <td class="align-middle">{{ tuple.Revenue }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

@@ -102,8 +102,11 @@ class SqlHelper(object):
     # report 1 Category:  get data set
     def get_report1(self):
         self.cursor.execute(
-            "SELECT C.Category_Name AS Cate_Name, COUNT(P.PID) AS Cnt_Product, MIN(P.Retail_Price) AS Min_RtlPrc, "
-            "AVG(P.Retail_Price) AS Avg_RtlPrc, MAX(P.Retail_Price) AS Max_RtlPrc "
+            "SELECT C.Category_Name AS Cate_Name"
+            ", COUNT(P.PID) AS Cnt_Product"
+            ", FORMAT(IFNULL(MIN(P.Retail_Price), 0.000), 2) AS Min_RtlPrc"
+            ", FORMAT(IFNULL(AVG(P.Retail_Price), 0.000), 2) AS Avg_RtlPrc"
+            ", FORMAT(IFNULL(MAX(P.Retail_Price), 0.000), 2) AS Max_RtlPrc "
             "FROM CATEGORY AS C "
             "LEFT JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
             "LEFT JOIN PRODUCT AS P ON A.PID = P.PID "
@@ -116,14 +119,17 @@ class SqlHelper(object):
     # report 2 Actual versus Predicted Revenue for Couches and Sofas: get data set
     def get_report2(self):
         self.cursor.execute(
-            "SELECT P.PID AS PID, P.Product_Name AS Name, P.Retail_Price AS Price, "
-            "SUM(IFNULL(S.Quantity,0)) AS Tot_UnitSold, "
-            "SUM(IF(D.Discount_Price IS NULL,0,1) * IFNULL(S.Quantity,0)) AS Tot_UnitSold_AtDsct, "
-            "SUM(IF(D.Discount_Price IS NULL,1,0) * IFNULL(S.Quantity,0)) AS Tot_UnitSold_AtRtl, "
-            "SUM(IFNULL(S.Total_Amount,0)) AS Act_Revenue, "
-            "SUM(P.Retail_Price * IFNULL(S.Quantity,0) * IF(D.Discount_Price IS NULL, 1, 0.75)) AS Pred_Revenue, "
-            "(SUM(IFNULL(S.Total_Amount,0)) - SUM(P.Retail_Price * IFNULL(S.Quantity,0) * "
-            "IF(D.Discount_Price IS NULL, 1, 0.75))) AS Diff_Act_Pred_Revenue "
+            "SELECT P.PID AS PID"
+            ", P.Product_Name AS Name"
+            ", P.Retail_Price AS Price"
+            ", ROUND(SUM(IFNULL(S.Quantity,0)), 2) AS Tot_UnitSold"
+            ", SUM(IF(D.Discount_Price IS NULL,0,1) * IFNULL(S.Quantity,0)) AS Tot_UnitSold_AtDsct"
+            ", SUM(IF(D.Discount_Price IS NULL,1,0) * IFNULL(S.Quantity,0)) AS Tot_UnitSold_AtRtl"
+            ", ROUND(SUM(IFNULL(S.Total_Amount,0)), 2) AS Act_Revenue"
+            ", ROUND(SUM(P.Retail_Price * IFNULL(S.Quantity,0) * "
+            "   IF(D.Discount_Price IS NULL, 1, 0.75)), 2) AS Pred_Revenue"
+            ", ROUND((SUM(IFNULL(S.Total_Amount,0)) - SUM(P.Retail_Price * IFNULL(S.Quantity,0) * "
+            "   IF(D.Discount_Price IS NULL, 1, 0.75))), 2) AS Diff_Act_Pred_Revenue "
             "FROM CATEGORY AS C "
             "LEFT JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
             "LEFT JOIN PRODUCT AS P ON A.PID = P.PID "
@@ -149,7 +155,7 @@ class SqlHelper(object):
                             ", Street_Address"
                             ", City_Name"
                             ", YEAR(Date) AS Year"
-                            ", SUM(IFNULL(Total_Amount, 0)) AS Revenue "
+                            ", ROUND(SUM(IFNULL(Total_Amount, 0)), 2) AS Revenue "
                             "FROM STORE "
                             "LEFT JOIN SALE ON STORE.Store_Number = SALE.Store_Number "
                             "WHERE STORE.State_Location = %s"
@@ -218,10 +224,10 @@ class SqlHelper(object):
     def report6_revenue_by_population(self):
         self.cursor.execute(
             "SELECT YEAR(SRC.`Date`) AS Years"
-            ", SUM(IF(Population < 3700000, Total_Amount, 0)) AS SmallCity"
-            ", SUM(IF(Population >= 3700000 AND Population < 6700000, Total_Amount, 0)) AS MediumCity"
-            ", SUM(IF(Population >= 6700000 AND Population < 9000000, Total_Amount, 0)) AS LargeCity"
-            ", SUM(IF(Population >= 9000000, Total_Amount, 0)) AS ExtraLargeCity "
+            ", ROUND(SUM(IF(Population < 3700000, Total_Amount, 0)), 2) AS SmallCity"
+            ", ROUND(SUM(IF(Population >= 3700000 AND Population < 6700000, Total_Amount, 0)), 2) AS MediumCity"
+            ", ROUND(SUM(IF(Population >= 6700000 AND Population < 9000000, Total_Amount, 0)), 2) AS LargeCity"
+            ", ROUND(SUM(IF(Population >= 9000000, Total_Amount, 0)), 2) AS ExtraLargeCity "
             "FROM ("
             "SELECT SALE.`Date`, SALE.Total_Amount, CITY.Population "
             "FROM CITY "
