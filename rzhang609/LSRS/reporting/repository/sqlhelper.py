@@ -252,7 +252,9 @@ class SqlHelper(object):
             "FROM STORE INNER JOIN SALE ON STORE.Store_Number = SALE.Store_Number "
             ") AS REV "
             "GROUP BY Sale_Year_Month "
-            "HAVING Sale_Year_Month >= (SELECT DATE_FORMAT(DATE_SUB(MAX(SALE.`Date`), INTERVAL 1 YEAR), \"%Y-%m\") FROM SALE) "
+            "HAVING Sale_Year_Month >= "
+            "(SELECT DATE_FORMAT(DATE_ADD( LAST_DAY(DATE_SUB(MAX(SALE.`Date`), INTERVAL 12 MONTH) ), INTERVAL 1 DAY), \"%Y-%m\") "
+            "FROM SALE) "
             "ORDER BY Sale_Year_Month ASC'); "
         )
         self.cursor.execute(
