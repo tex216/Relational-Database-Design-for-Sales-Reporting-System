@@ -121,8 +121,8 @@ class SqlHelper(object):
         self.cursor.execute(
             "SELECT P.PID AS PID"
             ", P.Product_Name AS Name"
-            ", P.Retail_Price AS Price"
-            ", ROUND(SUM(IFNULL(S.Quantity,0)), 2) AS Tot_UnitSold"
+            ", ROUND(P.Retail_Price, 2) AS Price"
+            ", SUM(IFNULL(S.Quantity,0)) AS Tot_UnitSold"
             ", SUM(IF(D.Discount_Price IS NULL,0,1) * IFNULL(S.Quantity,0)) AS Tot_UnitSold_AtDsct"
             ", SUM(IF(D.Discount_Price IS NULL,1,0) * IFNULL(S.Quantity,0)) AS Tot_UnitSold_AtRtl"
             ", ROUND(SUM(IFNULL(S.Total_Amount,0)), 2) AS Act_Revenue"
