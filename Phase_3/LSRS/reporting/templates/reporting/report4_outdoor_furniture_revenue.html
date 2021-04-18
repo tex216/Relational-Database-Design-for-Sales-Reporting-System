@@ -1,0 +1,58 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<main class="container" role="main">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Outdoor Furniture Revenue</li>
+                </ol>
+            </nav>
+
+            <br />
+            <div class="align-items-center bg-purple rounded ">
+                <h2 class="col-md-20">
+                    <i class="bi bi-instagram"></i>
+                    <p2>Outdoor Furniture Revenue</p2>
+                </h2>
+            </div>
+
+            <br />
+            <div class="align-items-center bg-purple rounded" id="divReport4">
+                <div class="col-md-12">
+                    {% if report4 %}
+                    <table class="table table-bordered table-sm text-center">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="align-middle">Year</th>
+                                <th scope="col" class="align-middle">Total Number of Items Sold</th>
+                                <th scope="col" class="align-middle">Average Number of Items Sold per Day</th>
+                                <th scope="col" class="align-middle">Total Number of Items Sold on Groundhog Day</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tuple in report4 %}
+                            <tr>
+                                <td class="align-middle">{{ tuple.Year }}</td>
+                                <td class="align-middle">{{ tuple.Tot_Quantity }}</td>
+                                <td class="align-middle">{{ tuple.Avg_Quantity|floatformat:2 }}</td>
+                                <td class="align-middle">{{ tuple.GhDay_Quantity }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <p>No Records!</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

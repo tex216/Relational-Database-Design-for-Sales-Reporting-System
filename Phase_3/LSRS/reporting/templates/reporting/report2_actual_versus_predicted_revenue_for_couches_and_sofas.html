@@ -1,0 +1,68 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<main class="container" role="main">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Actual versus Predicted Revenue for Couches and Sofas</li>
+                </ol>
+            </nav>
+
+            <br />
+            <div class="align-items-center bg-purple rounded ">
+                <h2 class="col-md-20">
+                    <i class="bi bi-instagram"></i>
+                    <p2>Actual versus Predicted Revenue for Couches and Sofas</p2>
+                </h2>
+            </div>
+
+            <br />
+            <div class="align-items-center bg-purple rounded" id="divReport2">
+                <div class="col-md-12">
+                    {% if report2 %}
+                    <table class="table table-bordered table-sm">
+                        <thead class="thead-light text-center">
+                            <tr>
+                                <th scope="col" class="align-middle">Product ID</th>
+                                <th scope="col" class="align-middle">Product Name</th>
+                                <th scope="col" class="align-middle">Product Retail Price</th>
+                                <th scope="col" class="align-middle">Total Number of Items Sold</th>
+                                <th scope="col" class="align-middle">Total Number of Items Sold at Discount Price</th>
+                                <th scope="col" class="align-middle">Total Number of Items Sold at Retail Price</th>
+                                <th scope="col" class="align-middle">Actual Revenue</th>
+                                <th scope="col" class="align-middle">Predicted Revenue</th>
+                                <th scope="col" class="align-middle">Difference</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tuple in report2 %}
+                            <tr class="text-center align-middle">
+                                <td class="align-middle">{{ tuple.PID }}</td>
+                                <td class="align-middle">{{ tuple.Name }}</td>
+                                <td class="align-middle">{{ tuple.Price|floatformat:2 }}</td>
+                                <td class="align-middle">{{ tuple.Tot_UnitSold }}</td>
+                                <td class="align-middle">{{ tuple.Tot_UnitSold_AtDsct }}</td>
+                                <td class="align-middle">{{ tuple.Tot_UnitSold_AtRtl }}</td>
+                                <td class="align-middle" align="right">{{ tuple.Act_Revenue|floatformat:2 }}</td>
+                                <td class="align-middle" align="right">{{ tuple.Pred_Revenue|floatformat:2 }}</td>
+                                <td class="align-middle" align="right">{{ tuple.Diff_Act_Pred_Revenue|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <p>No Records!</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

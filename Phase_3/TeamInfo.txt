@@ -5,6 +5,7 @@ TeamMember3: Teng Xue      Email: txue34@gatech.edu
 TeamMember4: Yaping Yang   Email: yyang895@gatech.edu
 TeamMember5: Runxin Zhang  Email: rzhang609@gatech.edu
 
+
 SQL implemented file (all SQL queries):
 Phase_3/LSRS/reporting/repository/sqlhelper.py
 

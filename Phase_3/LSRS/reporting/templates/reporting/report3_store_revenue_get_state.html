@@ -1,0 +1,68 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<main class="container" role="main">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Get State List</li>
+                </ol>
+            </nav>
+
+            <div class="align-items-center  bg-purple rounded ">
+                <h2 class="mb-4">
+                    <i class="bi bi-people"></i>
+                    <p2>Store Revenue by Year by State</p2>
+                </h2>
+            </div>
+
+            <div class="align-items-center bg-purple rounded" id="divReport3GetState">
+                <form action="/reporting/report3_store_revenue_by_year_by_state/" method="post">
+                    {% csrf_token %}
+                    <div class="col-xs-12 form-group">
+                        <label class="col-xs-4" for="city_state_location">State:</label>
+                        <select class="col-xs-8 form-control" name="city_state_location" id="city_state_location" data-placeholder="Select State"  required="required">
+                            <option value="-1">Select State</option>
+                            {% for state in state_list %}
+                            <option value="{{ state.State_Location }}">{{ state.State_Location }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br/>
+                    <div class="col-xs-12 form-group">
+                        <input class="btnSubmit btn btn-md btn-secondary" id="btnReport3" type="submit" value="Run Report" disabled/>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+
+<script>
+
+    $( document ).ready(function() {
+    });
+
+    $("#city_state_location").change(function() {
+        var selected_state = $("#city_state_location option:selected");
+        if (selected_state.val() !== "" && selected_state.val() !== "-1") {
+            $("#btnReport3").attr("disabled", false);
+            $("#btnReport3").removeClass("btn-secondary").addClass("btn-primary active");
+        }
+        if (selected_state.val() === "-1") {
+            $("#btnReport3").attr("disabled", true);
+            $("#btnReport3").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
+        }
+    });
+
+
+
+
+</Script>
+
+{% endblock %}

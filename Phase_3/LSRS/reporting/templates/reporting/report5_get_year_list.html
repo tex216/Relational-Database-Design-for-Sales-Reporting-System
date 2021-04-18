@@ -1,0 +1,110 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<main class="container" role="main">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Get Year and Month List</li>
+                </ol>
+            </nav>
+
+            <div class="align-items-center  bg-purple rounded ">
+                <h2 class="mb-4">
+                    <i class="bi bi-people"></i>
+                    <p2>Get Year and Month List</p2>
+                </h2>
+            </div>
+
+            <div class="align-items-center bg-purple rounded" id="divGetYearAndMonthList">
+                <form action="/reporting/report5_state_with_highest_volume/" method="post">
+                    {% csrf_token %}
+                    <div class="col-xs-12 form-group">
+                        <label class="col-xs-4" for="year_list">Year:</label>
+                        <select class="col-xs-8 form-control" name="year_list" id="year_list" data-placeholder="Select Year"  required="required">
+                            <option value="">Select Year</option>
+                            {% for year in year_list %}
+                            <option value="{{ year.Year }}">{{ year.Year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <label class="col-xs-4" for="month_list">Month:</label>
+                        <select class="col-xs-8 form-control" name="month_list" id="month_list" data-placeholder="Select Month" class="form-control" required="required" disabled>
+                        </select>
+                    </div>
+                    <br/>
+                    <div class="col-xs-12 form-group">
+                        <input class="btnSubmit btn btn-md btn-secondary" id="btnReport5" type="submit" value="Run Report" disabled/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+<script>
+
+    $( document ).ready(function() {
+    });
+
+    $("#year_list").change(function() {
+
+            var selected_year = $("#year_list option:selected");
+            if (typeof selected_year === "undefined" || selected_year.val() === "") {
+                $("#hidStatus").val("failed");
+                $("#hidMessage").val("Please select appropriate year.");
+                $('#month_list').html('');
+                $('#month_list').attr("disabled", true);
+                $("#btnReport5").attr("disabled", true);
+                $("#btnReport5").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
+                return;
+            }
+
+            $.ajax({
+                url: '/reporting/report5_get_month_list',
+                data: {"selected_year": selected_year.val()},
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var selectContent="<option value=''>Select Month</option>";
+                    $.each(response, function(i, item){
+                        selectContent += "<option value='"+item.Month+"'>" + item.Month + "</option>"
+                    });
+                    $('#month_list').html(selectContent);
+                    $('#month_list').attr("disabled", false);
+                    $('#month_list').val('');
+                    $("#btnReport5").attr("disabled", true);
+                    $("#btnReport5").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
+                 },
+                 fail: function() {
+                    $("#hidStatus").val("failed");
+                    $("#hidMessage").val("Exception when get month list");
+                 },
+            })
+        });
+
+    $("#month_list").change(function() {
+        var selected_year = $("#year_list option:selected");
+        var selected_month = $("#month_list option:selected");
+
+        if(selected_year.val() == "" || selected_month.val() == ""){
+            $("#btnReport5").attr("disabled", true);
+            $("#btnReport5").removeClass("btn-primary").removeClass("active").addClass("btn-secondary");
+        }
+
+        if (selected_year.val() !== "" && selected_month.val() !== "") {
+            $("#btnReport5").attr("disabled", false);
+            $("#btnReport5").removeClass("btn-secondary").addClass("btn-primary active");
+        }
+    });
+
+</script>
+
+
+{% endblock %}
