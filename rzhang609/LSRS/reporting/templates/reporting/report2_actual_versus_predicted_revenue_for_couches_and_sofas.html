@@ -43,13 +43,13 @@
                             <tr class="text-center align-middle">
                                 <td class="align-middle">{{ tuple.PID }}</td>
                                 <td class="align-middle">{{ tuple.Name }}</td>
-                                <td class="align-middle">{{ tuple.Price }}</td>
+                                <td class="align-middle">{{ tuple.Price|floatformat:2 }}</td>
                                 <td class="align-middle">{{ tuple.Tot_UnitSold }}</td>
                                 <td class="align-middle">{{ tuple.Tot_UnitSold_AtDsct }}</td>
                                 <td class="align-middle">{{ tuple.Tot_UnitSold_AtRtl }}</td>
-                                <td class="align-middle">{{ tuple.Act_Revenue }}</td>
-                                <td class="align-middle">{{ tuple.Pred_Revenue }}</td>
-                                <td class="align-middle">{{ tuple.Diff_Act_Pred_Revenue }}</td>
+                                <td class="align-middle">{{ tuple.Act_Revenue|floatformat:2 }}</td>
+                                <td class="align-middle">{{ tuple.Pred_Revenue|floatformat:2 }}</td>
+                                <td class="align-middle">{{ tuple.Diff_Act_Pred_Revenue|floatformat:2 }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

@@ -104,9 +104,9 @@ class SqlHelper(object):
         self.cursor.execute(
             "SELECT C.Category_Name AS Cate_Name"
             ", COUNT(P.PID) AS Cnt_Product"
-            ", FORMAT(IFNULL(MIN(P.Retail_Price), 0.000), 2) AS Min_RtlPrc"
-            ", FORMAT(IFNULL(AVG(P.Retail_Price), 0.000), 2) AS Avg_RtlPrc"
-            ", FORMAT(IFNULL(MAX(P.Retail_Price), 0.000), 2) AS Max_RtlPrc "
+            ", ROUND(IFNULL(MIN(P.Retail_Price), 0.000), 2) AS Min_RtlPrc"
+            ", ROUND(IFNULL(AVG(P.Retail_Price), 0.000), 2) AS Avg_RtlPrc"
+            ", ROUND(IFNULL(MAX(P.Retail_Price), 0.000), 2) AS Max_RtlPrc "
             "FROM CATEGORY AS C "
             "LEFT JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
             "LEFT JOIN PRODUCT AS P ON A.PID = P.PID "
@@ -169,7 +169,7 @@ class SqlHelper(object):
         self.cursor.execute(
             "SELECT YEAR(Date) AS Year"
             ", SUM(IFNULL(Quantity, 0)) AS Tot_Quantity"
-            ", (SUM(IFNULL(Quantity, 0)) / 365) AS Avg_Quantity"
+            ", ROUND((SUM(IFNULL(Quantity, 0)) / 365), 2) AS Avg_Quantity"
             ", SUM(IF(MONTH(Date)=2 AND DAY(Date)=2,1,0) * IFNULL(Quantity, 0)) AS GhDay_Quantity "
             "FROM CATEGORY AS C "
             "LEFT JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "

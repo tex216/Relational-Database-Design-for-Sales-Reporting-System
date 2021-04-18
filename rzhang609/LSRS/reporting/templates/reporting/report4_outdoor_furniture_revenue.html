@@ -38,7 +38,7 @@
                             <tr>
                                 <td class="align-middle">{{ tuple.Year }}</td>
                                 <td class="align-middle">{{ tuple.Tot_Quantity }}</td>
-                                <td class="align-middle">{{ tuple.Avg_Quantity }}</td>
+                                <td class="align-middle">{{ tuple.Avg_Quantity|floatformat:2 }}</td>
                                 <td class="align-middle">{{ tuple.GhDay_Quantity }}</td>
                             </tr>
                             {% endfor %}

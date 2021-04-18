@@ -12,7 +12,10 @@ def hash(object, attr):
     except VariableDoesNotExist:
         value = None
 
-    return value
+    if (isinstance(value, str)):
+        return value
+    else:
+        return "{:.2f}".format(value)
 
 
 class GetReport(generic.ListView):
