@@ -104,9 +104,9 @@ class SqlHelper(object):
         self.cursor.execute(
             "SELECT C.Category_Name AS Cate_Name"
             ", COUNT(P.PID) AS Cnt_Product"
-            ", ROUND(IFNULL(MIN(P.Retail_Price), 0.000), 2) AS Min_RtlPrc"
-            ", ROUND(IFNULL(AVG(P.Retail_Price), 0.000), 2) AS Avg_RtlPrc"
-            ", ROUND(IFNULL(MAX(P.Retail_Price), 0.000), 2) AS Max_RtlPrc "
+            ", ROUND(IFNULL(MIN(P.Retail_Price), 0.00), 2) AS Min_RtlPrc"
+            ", ROUND(IFNULL(AVG(P.Retail_Price), 0.00), 2) AS Avg_RtlPrc"
+            ", ROUND(IFNULL(MAX(P.Retail_Price), 0.00), 2) AS Max_RtlPrc "
             "FROM CATEGORY AS C "
             "LEFT JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
             "LEFT JOIN PRODUCT AS P ON A.PID = P.PID "
