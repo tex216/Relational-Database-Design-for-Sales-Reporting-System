@@ -19,7 +19,7 @@ FLUSH PRIVILEGES;
 -- CREATE TABLEs 
 CREATE TABLE STORE (
   Store_Number varchar(50) NOT NULL,
-  Phone_Number varchar(14),
+  Phone_Number varchar(14) NOT NULL,
   Street_Address varchar(200) NOT NULL,
   Has_Restaurant tinyint NOT NULL,
   Has_Snack_Bar tinyint NOT NULL,

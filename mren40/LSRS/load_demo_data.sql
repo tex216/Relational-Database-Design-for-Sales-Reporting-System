@@ -53,9 +53,9 @@ IGNORE 1 Lines
 (@col1, @col2, @col3, @col4, @col5, @col6, @col7, @col8) 
 SET Store_Number=@col1, Phone_Number=@col2, Street_Address=@col3, City_Name=@col4, State_Location=@col5, Has_Restaurant=@col6, Has_Snack_Bar=@col7, Time_Limit=NULLIF(@col8,'');
 -- For Phone_Number="", set to NULL
-UPDATE STORE
-SET Phone_Number = NULL
-WHERE Phone_Number = '""';
+--UPDATE STORE
+--SET Phone_Number = NULL
+--WHERE Phone_Number = '""';
 
 -- PRODUCT
 LOAD DATA INFILE 'products.tsv'
