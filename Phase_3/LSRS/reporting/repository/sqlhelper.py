@@ -19,7 +19,7 @@ class SqlHelper(object):
     def get_count_stores_offering_food(self):
         self.cursor.execute("SELECT COUNT(Store_Number) AS Count "
                             "FROM STORE "
-                            "WHERE Has_Restaurant IS TRUE OR Has_Snack_Bar IS TRUE;")
+                            "WHERE Has_Restaurant = 1 OR Has_Snack_Bar = 1;")
         count_stores_offering_food = self.cursor.fetchall()
         return count_stores_offering_food
 
@@ -290,7 +290,7 @@ class SqlHelper(object):
             "AS COLS "
             "LEFT JOIN "
             "(SELECT C.Category_Name AS Category, "
-            "IF(T.Has_Restaurant IS TRUE, 'Restaurant', 'Non-restaurant') AS `Store Type`, "
+            "IF(T.Has_Restaurant = 1, 'Restaurant', 'Non-restaurant') AS `Store Type`, "
             "SUM(S.Quantity) AS `Quantity Sold` "
             "FROM CATEGORY AS C "
             "INNER JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
