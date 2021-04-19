@@ -200,23 +200,29 @@ class SqlHelper(object):
     # report 5 State with Highest Volume: get data set
     def get_report5(self, selected_year, selected_month):
         self.cursor.execute(
+            "SELECT C0.Category_Name, NON_EMPTY_CTGY.State_Location, IFNULL(NON_EMPTY_CTGY.Tot_UnitSold, 0) AS Tot_UnitSold "
+            "FROM CATEGORY AS C0 "
+            "LEFT JOIN "
+            "( "
             "SELECT C.Category_Name, T.State_Location, SUM(IFNULL(S.Quantity,0)) AS Tot_UnitSold "
             "FROM CATEGORY AS C "
-            "LEFT JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
-            "LEFT JOIN PRODUCT AS P ON A.PID = P.PID "
-            "LEFT JOIN SALE AS S ON P.PID = S.PID AND YEAR(S.`Date`) = %s AND MONTH(S.`Date`) = %s "
-            "LEFT JOIN STORE AS T ON S.Store_Number = T.Store_Number "
+            "INNER JOIN ASSIGNED AS A ON C.Category_Name = A.Category_Name "
+            "INNER JOIN SALE AS S ON A.PID = S.PID AND YEAR(S.`Date`) = %s AND MONTH(S.`Date`) = %s "
+            "INNER JOIN STORE AS T ON S.Store_Number = T.Store_Number "
             "GROUP BY C.Category_Name, T.State_Location "
-            "HAVING Tot_UnitSold >= ALL ( "
+            "HAVING Tot_UnitSold >= ALL "
+            "( "
             "SELECT SUM(IFNULL(S2.Quantity,0)) "
             "FROM CATEGORY AS C2 "
-            "LEFT JOIN ASSIGNED AS A2 ON C2.Category_Name = A2.Category_Name "
-            "LEFT JOIN PRODUCT AS P2 ON A2.PID = P2.PID "
-            "LEFT JOIN SALE AS S2 ON P2.PID = S2.PID AND YEAR(S2.`Date`) = %s AND MONTH(S2.`Date`) = %s "
-            "LEFT JOIN STORE AS T2 ON S2.Store_Number = T2.Store_Number "
+            "INNER JOIN ASSIGNED AS A2 ON C2.Category_Name = A2.Category_Name "
+            "INNER JOIN SALE AS S2 ON A2.PID = S2.PID AND YEAR(S2.`Date`) = %s AND MONTH(S2.`Date`) = %s "
+            "INNER JOIN STORE AS T2 ON S2.Store_Number = T2.Store_Number "
             "WHERE C2.Category_Name = C.Category_Name "
             "GROUP BY C2.Category_Name, T2.State_Location "
-            ") ORDER BY C.Category_Name ASC;", ([selected_year], [selected_month], [selected_year], [selected_month]))
+            ") "
+            ") AS NON_EMPTY_CTGY "
+            "ON C0.Category_Name = NON_EMPTY_CTGY.Category_Name "
+            "ORDER BY C0.Category_Name ASC;", ([selected_year], [selected_month], [selected_year], [selected_month]))
         report5_res = self.cursor.fetchall()
         return report5_res
 
