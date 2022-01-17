@@ -3,6 +3,7 @@
 * Phase 1 & 2: Designed a MySQL database for a sales reporting system by using **EER model design**.
 * Phase 3: Implemented by a FULL STACK Web Application using **Bootstrap** (Frontend UI - to allow users interacting with the system) and **Django** (Backend framework - to query the database).
 * Details see the corresponding phase folders inside.
+* SQL implemented file (all SQL queries): Phase_3/LSRS/reporting/repository/sqlhelper.py
 * This is a Team Project, credits to all team members, see TeamInfo.txt in Phase_3 folder.
 
 ## How to run: 
