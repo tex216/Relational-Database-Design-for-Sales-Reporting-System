@@ -4,7 +4,7 @@
 * Phase 3: Implemented by a FULL STACK Web Application using Bootstrap (Frontend - a web UI to allow users interacting with the system) and Django (Backend framework - to query the database).
 * Details see the corresponding phase folders inside.
 
-How to run: in the Python virtual environments of Phase_3/LSRS folder, running the following code in the terminal window.
+How to run: in the Python virtual environments of Phase_3/LSRS folder, running the following code in the terminal window: 
 **python manage.py**
 
 This is a Team Project, credits to all team members, see TeamInfo.txt in Phase_3 folder.
